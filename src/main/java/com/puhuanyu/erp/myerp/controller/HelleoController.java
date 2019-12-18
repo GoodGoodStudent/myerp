@@ -13,6 +13,6 @@ public class HelleoController
     @RequestMapping("/hello")
     public String hello()
     {
-        return "pugongzi";
+        return "login";
     }
 }
