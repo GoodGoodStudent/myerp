@@ -2,9 +2,12 @@ package com.puhuanyu.erp.myerp.Mapper;
 
 import com.puhuanyu.erp.myerp.bean.Roottype;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
+@Mapper
 public interface RootTypeMapper
 {
     @Insert("insert into roottype(name) values(#{name})")
