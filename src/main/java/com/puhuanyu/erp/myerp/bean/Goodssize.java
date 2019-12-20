@@ -1,6 +1,6 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Goodssize
+public class Goodssize//商品规格
 {
     private int id;
     private String size;
