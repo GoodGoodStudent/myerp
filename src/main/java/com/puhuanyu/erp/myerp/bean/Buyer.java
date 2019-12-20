@@ -9,21 +9,15 @@ public class Buyer
     private String begaindate;
     private String overdate;
     private Dep dep;
+    private Emp emp1;//审核员
+    private Emp emp2;//采购员
+
 
     public Buyer()
     {
     }
 
-    public Buyer(int id, String numberid, String builddate, String auditdate, String begaindate, String overdate, Dep dep)
-    {
-        this.id = id;
-        this.numberid = numberid;
-        this.builddate = builddate;
-        this.auditdate = auditdate;
-        this.begaindate = begaindate;
-        this.overdate = overdate;
-        this.dep = dep;
-    }
+
 
     public int getId()
     {
