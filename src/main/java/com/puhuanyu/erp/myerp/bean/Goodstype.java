@@ -1,6 +1,6 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Goodstype
+public class Goodstype//商品类型
 {
     private int id;
     private String name;
