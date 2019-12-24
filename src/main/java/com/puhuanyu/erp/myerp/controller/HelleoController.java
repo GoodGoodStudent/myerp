@@ -1,18 +1,27 @@
 package com.puhuanyu.erp.myerp.controller;
 
+import com.puhuanyu.erp.myerp.Mapper.RootMapper;
+import com.puhuanyu.erp.myerp.Mapper.RootTypeMapper;
+import com.puhuanyu.erp.myerp.bean.Root;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class HelleoController
 {
+    @Autowired
+    private RootMapper rootMapper;
+    @Autowired
+    private RootTypeMapper rootTypeMapper;
     @RequestMapping("/hello")
     public String hello()
     {
-        return "hello word!";
+        Root root=rootMapper.findRootById(101);
+        String str=root.getName();
+        return str;
     }
 }

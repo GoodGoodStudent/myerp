@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+//权限类型管理
 @Component
 @Mapper
 public interface RootTypeMapper

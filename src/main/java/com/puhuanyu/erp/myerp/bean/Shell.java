@@ -1,11 +1,11 @@
 package com.puhuanyu.erp.myerp.bean;
-
+//出售订单表
 public class Shell
 {
     private int id;
-    private String numberid;
-    private String begaindate;
-    private String overdate;
+    private String numberid;//订单编号
+    private String begaindate;//开始时间
+    private String overdate;//结束时间
     private Clientinfo clientinfo;//下单员
     private Emp emp;//审核员
     private Goodsinfo goodsinfo;//货物信息

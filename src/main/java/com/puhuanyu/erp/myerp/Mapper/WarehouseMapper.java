@@ -2,9 +2,12 @@ package com.puhuanyu.erp.myerp.Mapper;
 
 import com.puhuanyu.erp.myerp.bean.Warehouse;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 //厂库信息管理
+@Component
+@Mapper
 public interface WarehouseMapper
 {
     @Insert("insert into warehouse(name,address,emp_id) values(#{name},#{address},#{emp.id})")
