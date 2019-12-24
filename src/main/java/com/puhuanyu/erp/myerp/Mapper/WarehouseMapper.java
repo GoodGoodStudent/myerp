@@ -19,15 +19,9 @@ public interface WarehouseMapper
     @Update("update warehouse set name=#{name},address=#{address},emp_id=#{emp.id} where id=#{id}")
     public void updateWarehouse(Warehouse warehouse);
 
-    @Results(
-            @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.EmpMapper.findById"))
-    )
     @Select("select * from warehouse where id=#{id}")
     public Warehouse findWarehouseById(int id);
 
-    @Results(
-            @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.EmpMapper.findById"))
-    )
     @Select("select * from warehouse")
     public List<Warehouse> findWarehouseByAll();
 }
