@@ -16,7 +16,7 @@ public class Buyer
     private int state;//0表示未完成，1表示已完成
     public String toString()
     {
-        return "Buyer:[id="+id+",numberid="+numberid+",builddate="+builddate+",auditdate="+auditdate+",begaindate="+begaindate+",overdate="+overdate+",Dep:"+dep+",Emp1:"+emp1+",Emp2:"+emp2+",Goodsinfo:"+goodsinfo+"," +
+        return "Buyer:[id="+id+",numberid="+numberid+",builddate="+builddate+",auditdate="+auditdate+",begaindate="+begaindate+",overdate="+overdate+","+dep+","+emp1+","+emp2+","+goodsinfo+"," +
                 "number="+number+",state="+state+"]";
     }
 

@@ -12,7 +12,7 @@ public class Clientinfo
     public String toString()
     {
         return "Clientinfo:[id="+id+",name="+name+",sex="+sex+",phone="+phone+"," +
-                "email="+email+",Client:"+client+"]";
+                "email="+email+","+client+"]";
     }
 
     public Clientinfo()

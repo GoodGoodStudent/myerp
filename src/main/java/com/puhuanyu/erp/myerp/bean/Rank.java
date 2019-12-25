@@ -48,6 +48,6 @@ public class Rank
     }
 
     public String toString(){
-        return "Rank:[id="+id+",name="+name+",Dep:"+dep+"]";
+        return "Rank:[id="+id+",name="+name+","+dep+"]";
     }
 }
