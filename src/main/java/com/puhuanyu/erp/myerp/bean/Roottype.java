@@ -10,6 +10,11 @@ public class Roottype
         super();
     }
 
+    public Roottype(String name)
+    {
+        this.name = name;
+    }
+
     public Roottype(int id, String name)
     {
         super();

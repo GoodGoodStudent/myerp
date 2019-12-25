@@ -12,6 +12,18 @@ public class Shell
     private int number;
     private int state;//0表示未完成，1表示已完成
 
+    public Shell(String numberid, String begaindate, String overdate, Clientinfo clientinfo, Emp emp, Goodsinfo goodsinfo, int number, int state)
+    {
+        this.numberid = numberid;
+        this.begaindate = begaindate;
+        this.overdate = overdate;
+        this.clientinfo = clientinfo;
+        this.emp = emp;
+        this.goodsinfo = goodsinfo;
+        this.number = number;
+        this.state = state;
+    }
+
     public String toString()
     {
         return "Shell:[id="+id+",numberid="+numberid+",begaindate="+begaindate+"," +

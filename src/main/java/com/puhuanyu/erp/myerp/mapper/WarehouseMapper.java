@@ -20,13 +20,13 @@ public interface WarehouseMapper
     public void updateWarehouse(Warehouse warehouse);
 
     @Results(
-            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.EmpMapper.findById"))
+            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.mapper.EmpMapper.findById"))
     )
     @Select("select * from warehouse where id=#{id}")
     public Warehouse findWarehouseById(int id);
 
     @Results(
-            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.Mapper.EmpMapper.findById"))
+            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.mapper.EmpMapper.findById"))
     )
     @Select("select * from warehouse")
     public List<Warehouse> findWarehouseByAll();
