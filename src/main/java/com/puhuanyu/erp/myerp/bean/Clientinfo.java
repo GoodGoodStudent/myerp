@@ -9,6 +9,11 @@ public class Clientinfo
     private String email;
     private Client client;
 
+    public String toString()
+    {
+        return "Clientinfo:[id="+id+",name="+name+",sex="+sex+",phone="+phone+"," +
+                "email="+email+",Client:"+client+"]";
+    }
 
     public Clientinfo()
     {

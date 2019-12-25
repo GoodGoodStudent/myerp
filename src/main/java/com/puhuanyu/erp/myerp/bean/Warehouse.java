@@ -60,6 +60,6 @@ public class Warehouse
     }
 
     public String toString(){
-        return "Warehouse:[id="+id+",name="+name+",address="+address+",emp:"+emp+"]";
+        return "Warehouse:[id="+id+",name="+name+",address="+address+",Emp:"+emp+"]";
     }
 }

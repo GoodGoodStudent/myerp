@@ -39,6 +39,6 @@ public class Roottype
 
     public String toString()
     {
-        return "RootType:[]";
+        return "RootType:[id="+id+",name="+name+"]";
     }
 }

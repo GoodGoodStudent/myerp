@@ -60,6 +60,6 @@ public class Goodssize//商品规格
     }
 
     public String toString(){
-        return "Goodssize:[id="+id+",size="+size+goodsinfo+"price="+price+"]";
+        return "Goodssize:[id="+id+",size="+size+",goodsinfo:"+goodsinfo+"price="+price+"]";
     }
 }

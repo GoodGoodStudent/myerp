@@ -20,18 +20,20 @@ public interface RootMapper
     public void updateRoot(Root root);
 
     @Results(
-            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.RootTypeMapper.findRootTypeById"))
+            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.RootTypeMapper.findRootTypeById"))
     )
     @Select("select * from root where id=#{id}")
     public Root findRootById(int id);
 
     @Results(
-            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.RootTypeMapper.findRootTypeById"))
+            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.RootTypeMapper.findRootTypeById"))
     )
     @Select("select * from root where roottype_id=#{tid}")
     public List<Root> findRootByTypeId(int tid);//根据权限类型查找所属的权限
 
-
+    @Results(
+            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.RootTypeMapper.findRootTypeById"))
+    )
     @Select("select * from root")
     public List<Root> findRootByAll();
 }
