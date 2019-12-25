@@ -12,6 +12,11 @@ public class Shell
     private int number;
     private int state;//0表示未完成，1表示已完成
 
+    public String toString()
+    {
+        return "Shell:[id="+id+",numberid="+numberid+",begaindate="+begaindate+"," +
+                "overdate="+overdate+",Clientinfo:"+clientinfo+",Emp:"+emp+",Goodsinfo:"+goodsinfo+",number="+number+",state="+state+",]";
+    }
     public Shell()
     {
     }
