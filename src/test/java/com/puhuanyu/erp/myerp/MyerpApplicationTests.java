@@ -1,8 +1,10 @@
 package com.puhuanyu.erp.myerp;
 
+import com.puhuanyu.erp.myerp.bean.Client;
 import com.puhuanyu.erp.myerp.bean.Dep;
 import com.puhuanyu.erp.myerp.bean.Goodstype;
 import com.puhuanyu.erp.myerp.bean.Rank;
+import com.puhuanyu.erp.myerp.mapper.ClientMapper;
 import com.puhuanyu.erp.myerp.service.GoodstypeService;
 import com.puhuanyu.erp.myerp.service.RankService;
 import org.junit.jupiter.api.Test;
@@ -51,6 +53,17 @@ class MyerpApplicationTests
         List<Rank> list2 = rankService.findAllRankByDep_id(7);
         for(Rank r : list2){
             System.out.println(r);
+        }
+    }
+    @Autowired
+    private ClientMapper clientMapper;
+    @Test
+    public void test01()
+    {
+        List<Client> clients=clientMapper.findAll("客户");
+        for (Client c:clients)
+        {
+            System.out.println(c.getName());
         }
     }
 }

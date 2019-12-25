@@ -19,7 +19,7 @@ public interface ClientinfoMapper
 
     //通过名字查询客户或者供应商的联系人
     @Select("select * from clientinfo where name=#{name}")
-    public Clientinfo findById(String name);
+    public Clientinfo findByName(String name);
 
     //修改客户或者供应商联系人
     @Update("update clientinfo set id=#{id},name=#{name},phone=#{phone},sex=#{sex},email=#{email},client_id=#{client.id}")
@@ -32,4 +32,8 @@ public interface ClientinfoMapper
     //添加一个客户或者供应商的联系人
     @Insert("insert into clientinfo(id,name,phone,sex,email client_id) value(#{id},#{name},#{phone},#{sex},#{email},#{client.id})")
     public void doClientinfo(Clientinfo clientinfo);
+
+    //通过id查询供应商或者客户联系人
+    @Select("select * from clientinfo where id=#{id}")
+    public Clientinfo findById(int id);
 }
