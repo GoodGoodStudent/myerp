@@ -49,6 +49,6 @@ public interface EmpMapper
     @Results(
             @Result(property = "rank",column = "rank_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.RankMapper.findRankByid"))
     )
-    @Update("update emp set rank_id=#{rankid} where id=#{id}")
-    public void updateRank(int id,int rankid);
+    @Update("update emp set rank_id=#{rankId} where id=#{id}")
+    public void updateRank(int id,int rankId);
 }

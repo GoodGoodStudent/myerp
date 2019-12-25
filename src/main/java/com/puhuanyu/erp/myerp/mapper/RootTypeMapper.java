@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface RootTypeMapper
 {
-    @Insert("insert into roottype(name) values(#{name})")
-    public void doRootType(Roottype roottype);
+    @Insert("insert into roottype(id,name) values(#{id},#{name})")
+    public int doRootType(Roottype roottype);
 
     @Delete("delete from roottype where id=#{id}")
     public void deleteRootType(int id);
@@ -24,4 +24,7 @@ public interface RootTypeMapper
 
     @Select("select * from roottype")
     public List<Roottype> findRootTypeByAll();
+
+    @Select("select max(id) from roottype")
+    public String findRootMaxId();
 }

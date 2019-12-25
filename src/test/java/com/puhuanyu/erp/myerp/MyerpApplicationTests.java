@@ -62,6 +62,7 @@ class MyerpApplicationTests
     @Test
     public void goodsinfoService(){
         Map<String,Object> map = new HashMap<String, Object>();
+        map.put("client_id",101);
         System.out.println(goodsinfoService.findGoodsinfoByCondition(map,0,2));
     }
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.validation.constraints.Min;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class RootMapperTest
@@ -73,5 +75,48 @@ public class RootMapperTest
         System.out.println(shellMapper.findShellByoverdate("2019-05-20").get(0).toString());
         System.out.println(shellMapper.findShellByState(1).get(0).toString());
         System.out.println(shellMapper.findShellAll().get(0).toString());
+    }
+    @Test
+    public void ShellBy()
+    {
+        Map<String, Object> map=new HashMap<String,Object>();
+        map.put("begaindate","'2019-02-28'");
+        map.put("emp_id",3001001);
+        System.out.println(shellMapper.findShellByCondition("shell",map ,0,1));
+
+    }
+    @Test
+    public void button()
+    {
+        int i,p=1,s=0;
+        for(i=1;i<=7;i++)
+        {
+            s=s+p;
+            p=p*2;
+            System.out.println("第"+i+"次循环：s="+s+"  p="+p);
+        }
+        System.out.println(s);
+    }
+    @Test
+    public void boot()
+    {
+        int[][] a=new int[3][3];
+        int s=0,i,j;
+        for(i=0;i<3;i++)
+        {
+            for (j=0;j<3;j++)
+            {
+                a[i][j]=i*3+j+1;
+            }
+        }
+        String text="";
+        for(i=0;i<3;i++)
+        {
+            for (j=0;j<=i;j++)
+            {
+                text+=a[i][j];
+            }
+        }
+        System.out.println(text);
     }
 }

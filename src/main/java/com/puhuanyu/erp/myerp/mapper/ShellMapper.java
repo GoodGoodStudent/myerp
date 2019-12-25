@@ -1,10 +1,13 @@
 package com.puhuanyu.erp.myerp.mapper;
 
 import com.puhuanyu.erp.myerp.bean.Shell;
+import com.puhuanyu.erp.myerp.util.DynaSqlProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+
 //出售订单管理
 @Component
 @Mapper
@@ -73,4 +76,12 @@ public interface ShellMapper
     })
     @Select("select * from shell")
     public List<Shell> findShellAll();
+
+    @Results({
+            @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
+            @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
+            @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
+    })
+    @SelectProvider(type = com.puhuanyu.erp.myerp.util.DynaSqlProvider.class,method = "selectWithParamSql")
+    public List<Shell> findShellByCondition(String table, Map<String,Object> map,int firstScore,int pageSize);
 }
