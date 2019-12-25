@@ -19,7 +19,9 @@ public interface RootMapper
     @Update("update root set name=#{name},roottype_id=#{roottype.id} where id=#{id}")
     public void updateRoot(Root root);
 
-
+    @Results(
+            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.RootTypeMapper.findRootTypeById"))
+    )
     @Select("select * from root where id=#{id}")
     public Root findRootById(int id);
 

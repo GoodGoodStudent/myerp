@@ -36,4 +36,9 @@ public class Roottype
     {
         this.name = name;
     }
+
+    public String toString()
+    {
+        return "RootType:[]";
+    }
 }

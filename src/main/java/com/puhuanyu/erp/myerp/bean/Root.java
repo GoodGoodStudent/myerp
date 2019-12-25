@@ -46,4 +46,9 @@ public class Root
     {
         this.roottype = roottype;
     }
+
+    public String toString()
+    {
+        return "Root:[id="+id+",name="+name+",RootType="+roottype+"]";
+    }
 }

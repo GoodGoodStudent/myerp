@@ -29,11 +29,11 @@ public interface ShellMapper
     @Select("select * from shell where id=#{id}")
     public Shell findShellById(int id);
 
-    @Select("select * from shell where state=#{state}")
-    public List<Shell> findShellByState(int state);//根据订单状态查找
-
     @Select("select * from shell where numberid=#{numid}")
     public Shell findShellByNumberid(int numid);//根据订单编号查找
+
+    @Select("select * from shell where state=#{state} limit (#{pageIndex}-1)*pageSize,pageSize")
+    public List<Shell> findShellByState(int state,int pageIndex,int pageSize);//根据订单状态查找
 
     @Select("select * from shell where begaindate=#{begaindate}")
     public List<Shell> findShellBybegaindate(String begaindate);//开始时间查找
@@ -41,5 +41,6 @@ public interface ShellMapper
     @Select("select * from shell where overdate=#{overdate}")
     public List<Shell> findShellByoverdate(String overdate);//结束时间查找
 
-
+    @Select("select * from shell")
+    public List<Shell> findShellAll();
 }
