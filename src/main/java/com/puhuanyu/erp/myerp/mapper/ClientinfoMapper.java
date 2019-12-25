@@ -12,12 +12,15 @@ public interface ClientinfoMapper
 {
     //查询一个客户或者供应商的所有联系人
     @Results(
-            @Result(property = "client",column = "client_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.ClientMapper.findById"))
+            @Result(property = "client",column = "client_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientMapper.findById"))
     )
     @Select("select * from clientinfo where client_id=#{cid}")
     public List<Clientinfo> findByCid(int cid);
 
     //通过名字查询客户或者供应商的联系人
+    @Results(
+            @Result(property = "client",column = "client_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientMapper.findById"))
+    )
     @Select("select * from clientinfo where name=#{name}")
     public Clientinfo findByName(String name);
 
@@ -34,6 +37,9 @@ public interface ClientinfoMapper
     public void doClientinfo(Clientinfo clientinfo);
 
     //通过id查询供应商或者客户联系人
+    @Results(
+            @Result(property = "client",column = "client_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientMapper.findById"))
+    )
     @Select("select * from clientinfo where id=#{id}")
     public Clientinfo findById(int id);
 }

@@ -7,6 +7,13 @@ public class Warehouse
     private String address;
     private Emp emp;
 
+    public Warehouse(String name, String address, Emp emp)
+    {
+        this.name = name;
+        this.address = address;
+        this.emp = emp;
+    }
+
     public Warehouse()
     {
     }
