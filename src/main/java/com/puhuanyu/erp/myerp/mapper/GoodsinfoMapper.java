@@ -34,7 +34,7 @@ public interface GoodsinfoMapper {//商品信息接口
     @Select("select * from goodsinfo where id=#{id}")
     public Goodsinfo findGoodsinfoByid(int id);
 
-    //根据仓库的id查找所有商品信息
+    //根据条件查找所有商品信息
     @Results({
             @Result(column = "client_id", property = "client", many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientMapper.findById")),
             @Result(column = "warehouse_id", property = "warehouse", many = @Many(select = "com.puhuanyu.erp.myerp.mapper.WarehouseMapper.findWarehouseById")),

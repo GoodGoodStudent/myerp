@@ -1,15 +1,18 @@
 package com.puhuanyu.erp.myerp;
 
-import com.puhuanyu.erp.myerp.bean.Dep;
+import com.puhuanyu.erp.myerp.bean.Goodsinfo;
 import com.puhuanyu.erp.myerp.bean.Goodstype;
 import com.puhuanyu.erp.myerp.bean.Rank;
+import com.puhuanyu.erp.myerp.service.GoodsinfoService;
 import com.puhuanyu.erp.myerp.service.GoodstypeService;
 import com.puhuanyu.erp.myerp.service.RankService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class MyerpApplicationTests
@@ -52,5 +55,13 @@ class MyerpApplicationTests
         for(Rank r : list2){
             System.out.println(r);
         }
+    }
+
+    @Autowired
+    GoodsinfoService goodsinfoService;
+    @Test
+    public void goodsinfoService(){
+        Map<String,Object> map = new HashMap<String, Object>();
+        System.out.println(goodsinfoService.findGoodsinfoByCondition(map,0,2));
     }
 }
