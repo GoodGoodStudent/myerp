@@ -15,7 +15,7 @@ public class Shell
     public String toString()
     {
         return "Shell:[id="+id+",numberid="+numberid+",begaindate="+begaindate+"," +
-                "overdate="+overdate+",Clientinfo:"+clientinfo+",Emp:"+emp+",Goodsinfo:"+goodsinfo+",number="+number+",state="+state+",]";
+                "overdate="+overdate+","+clientinfo+","+emp+","+goodsinfo+",number="+number+",state="+state+",]";
     }
     public Shell()
     {

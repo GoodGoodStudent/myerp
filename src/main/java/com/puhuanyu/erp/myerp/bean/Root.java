@@ -49,6 +49,6 @@ public class Root
 
     public String toString()
     {
-        return "Root:[id="+id+",name="+name+",RootType:"+roottype+"]";
+        return "Root:[id="+id+",name="+name+","+roottype+"]";
     }
 }

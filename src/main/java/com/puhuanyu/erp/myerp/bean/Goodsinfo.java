@@ -96,6 +96,6 @@ public class Goodsinfo
     }
 
     public String toString(){
-        return "Goodsinfo:[id="+id+",name="+name+",client:"+client+",unit="+unit+",goodstype:"+goodstype+",number="+number+",warehouse:"+warehouse+"]";
+        return "Goodsinfo:[id="+id+",name="+name+","+client+",unit="+unit+","+goodstype+",number="+number+","+warehouse+"]";
     }
 }

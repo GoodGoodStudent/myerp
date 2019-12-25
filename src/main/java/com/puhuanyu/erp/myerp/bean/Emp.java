@@ -157,6 +157,6 @@ public class Emp
 
     public String toString(){
         return "Emp:[id="+id+",name="+name+",password="+password+",sex="+sex+",phone="+phone+",address="+address+",card="+card+
-                ",worktime="+worktime+",birthtime="+birthtime+",leavetime="+leavetime+",dep:"+dep+",rank:"+rank+"]";
+                ",worktime="+worktime+",birthtime="+birthtime+",leavetime="+leavetime+","+dep+","+rank+"]";
     }
 }
