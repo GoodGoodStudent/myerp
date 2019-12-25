@@ -58,4 +58,8 @@ public class Goodssize//商品规格
     {
         this.price = price;
     }
+
+    public String toString(){
+        return "Goodssize:[id="+id+",size="+size+goodsinfo+"price="+price+"]";
+    }
 }

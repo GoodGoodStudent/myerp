@@ -94,4 +94,9 @@ public class Client
     {
         this.email = email;
     }
+
+    public String toString(){
+        return "Client:[id="+id+",name="+name+"+,phone="+phone+",address="+address+",state1="+state1+",state2="+state2+
+                ",email="+email+"]";
+    }
 }

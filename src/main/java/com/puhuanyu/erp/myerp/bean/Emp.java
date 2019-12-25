@@ -154,4 +154,9 @@ public class Emp
     {
         this.rank = rank;
     }
+
+    public String toString(){
+        return "Emp:[id="+id+",name="+name+",password="+password+",sex="+sex+",phone="+phone+",address="+address+",card="+card+
+                ",worktime="+worktime+",birthtime="+birthtime+",leavetime="+leavetime+dep+rank+"]";
+    }
 }

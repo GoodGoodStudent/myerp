@@ -36,4 +36,8 @@ public class Goodstype//商品类型
     {
         this.name = name;
     }
+
+    public String toString(){
+        return "Goodstype:[id=" + id + ",name="+name+"]";
+    }
 }

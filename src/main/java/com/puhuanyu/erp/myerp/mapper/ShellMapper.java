@@ -1,4 +1,4 @@
-package com.puhuanyu.erp.myerp.Mapper;
+package com.puhuanyu.erp.myerp.mapper;
 
 import com.puhuanyu.erp.myerp.bean.Shell;
 import org.apache.ibatis.annotations.*;

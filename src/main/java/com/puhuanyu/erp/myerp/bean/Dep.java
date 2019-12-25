@@ -1,5 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Dep
 {
     private int id;
@@ -35,5 +38,9 @@ public class Dep
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public String toString(){
+        return "Dep:[id="+id+",name="+name+"]";
     }
 }

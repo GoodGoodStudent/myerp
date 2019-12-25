@@ -94,4 +94,8 @@ public class Goodsinfo
     {
         this.warehouse = warehouse;
     }
+
+    public String toString(){
+        return "Goodsinfo:[id="+id+",name="+name+client+",unit="+unit+goodstype+",number="+number+warehouse+"]";
+    }
 }

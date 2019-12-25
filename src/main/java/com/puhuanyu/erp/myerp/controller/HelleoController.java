@@ -1,7 +1,7 @@
 package com.puhuanyu.erp.myerp.controller;
 
-import com.puhuanyu.erp.myerp.Mapper.RootMapper;
-import com.puhuanyu.erp.myerp.Mapper.RootTypeMapper;
+import com.puhuanyu.erp.myerp.mapper.RootMapper;
+import com.puhuanyu.erp.myerp.mapper.RootTypeMapper;
 import com.puhuanyu.erp.myerp.bean.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

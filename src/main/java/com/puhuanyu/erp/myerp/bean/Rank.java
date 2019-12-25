@@ -1,18 +1,22 @@
 package com.puhuanyu.erp.myerp.bean;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Rank
 {
     private int id;
     private String name;
+    private Dep dep;
 
     public Rank()
     {
     }
 
-    public Rank(int id, String name)
-    {
+    public Rank(int id, String name, Dep dep) {
         this.id = id;
         this.name = name;
+        this.dep = dep;
     }
 
     public int getId()
@@ -33,5 +37,17 @@ public class Rank
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public Dep getDep() {
+        return dep;
+    }
+
+    public void setDep(Dep dep) {
+        this.dep = dep;
+    }
+
+    public String toString(){
+        return "Rank:[id="+id+",name="+name+","+dep+"]";
     }
 }

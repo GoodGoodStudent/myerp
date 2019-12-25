@@ -58,4 +58,8 @@ public class Warehouse
     {
         this.emp = emp;
     }
+
+    public String toString(){
+        return "Warehouse:[id="+id+",name="+name+",address="+address+",emp:"+emp+"]";
+    }
 }

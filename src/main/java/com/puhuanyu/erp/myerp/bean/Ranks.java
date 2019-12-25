@@ -46,4 +46,8 @@ public class Ranks
     {
         this.root = root;
     }
+
+    public String toString(){
+        return "Ranks:[id="+id+rank+root+"]";
+    }
 }
