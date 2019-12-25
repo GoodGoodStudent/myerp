@@ -2,7 +2,10 @@ package com.puhuanyu.erp.myerp.mapper;
 
 import com.puhuanyu.erp.myerp.bean.Emp;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
+@Component
+@Mapper
 public interface EmpMapper
 {
     //通过工号查询员工

@@ -46,6 +46,7 @@ public class PageBean
     {
         return pages;
     }
+
     public void getPage()
     {
         this.pages=count%pageSize==0? count/pageSize:count/pageSize+1;

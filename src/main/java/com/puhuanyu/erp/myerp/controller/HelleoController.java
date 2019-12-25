@@ -21,7 +21,7 @@ public class HelleoController
     public String hello()
     {
         Root root=rootMapper.findRootById(101);
-        String str=root.toString()+" h";
+        String str=root.toString()+" hello";
         return str;
     }
 }

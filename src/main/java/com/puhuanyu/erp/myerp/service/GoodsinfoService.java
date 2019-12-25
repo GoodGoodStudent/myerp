@@ -2,11 +2,16 @@ package com.puhuanyu.erp.myerp.service;
 
 import com.puhuanyu.erp.myerp.bean.Goodsinfo;
 import com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsinfoService {
 
+    @Autowired
     private GoodsinfoMapper goodsinfoMapper;
 
     /**
@@ -15,7 +20,7 @@ public class GoodsinfoService {
     public String doGoodsinfo(Goodsinfo goodsinfo){
         int id = 0;
         if(goodsinfoMapper.findGoodsinfoMaxIDByGoodstype_id(goodsinfo.getGoodstype().getId()) != null){
-            id = Integer.parseInt(goodsinfoMapper.findGoodsinfoMaxIDByGoodstype_id(goodsinfo.getGoodstype().getId()));
+            id = Integer.parseInt(goodsinfoMapper.findGoodsinfoMaxIDByGoodstype_id(goodsinfo.getGoodstype().getId())) + 1;
         }else{
             id = goodsinfo.getGoodstype().getId() * 10000 + 1;
         }
@@ -61,5 +66,7 @@ public class GoodsinfoService {
         return goodsinfoMapper.findGoodsinfoByid(id);
     }
 
-
+    public List<Goodsinfo> findGoodsinfoByCondition(Map<String,Object> map, int firstScore, int pageSize){//多条件查询商品信息
+        return goodsinfoMapper.findGoodsinfoByCondition("goodsinfo", map, firstScore, pageSize);
+    }
 }
