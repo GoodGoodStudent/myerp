@@ -1,22 +1,15 @@
 package com.puhuanyu.erp.myerp;
 
 import com.puhuanyu.erp.myerp.bean.Dep;
-import com.puhuanyu.erp.myerp.bean.Goodsinfo;
 import com.puhuanyu.erp.myerp.bean.Goodstype;
 import com.puhuanyu.erp.myerp.bean.Rank;
-import com.puhuanyu.erp.myerp.mapper.EmpMapper;
-import com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper;
-import com.puhuanyu.erp.myerp.mapper.WarehouseMapper;
-import com.puhuanyu.erp.myerp.service.GoodsinfoService;
 import com.puhuanyu.erp.myerp.service.GoodstypeService;
 import com.puhuanyu.erp.myerp.service.RankService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 class MyerpApplicationTests
@@ -43,7 +36,7 @@ class MyerpApplicationTests
     @Autowired
     RankService rankService;
     @Test
-    public void rankServiceTest(){//角色业务测试类
+    public void rankServiceTest(){
         System.out.println(rankService.doRank("人事小哥哥",7));
         Rank rank = rankService.findRankById(7003);
         System.out.println(rank);
@@ -59,31 +52,5 @@ class MyerpApplicationTests
         for(Rank r : list2){
             System.out.println(r);
         }
-    }
-
-    @Autowired
-    GoodsinfoService goodsinfoService;
-    @Autowired
-    GoodsinfoMapper goodsinfoMapper;
-    @Autowired
-    WarehouseMapper warehouseMapper;
-    @Autowired
-    EmpMapper empMapper;
-    @Test
-    public void GoodsinfoServiceTest(){
-        Goodsinfo goodsinfo = goodsinfoService.findGoodsinfoByid(20001);
-        System.out.println(goodsinfo);
-        goodsinfo.getGoodstype().setId(3);
-        goodsinfo.setName("12306");
-        System.out.println(goodsinfoService.doGoodsinfo(goodsinfo));
-        goodsinfo.getGoodstype().setId(3);
-        goodsinfo.setName("12307");
-        System.out.println(goodsinfoService.updateGoodsinfo(goodsinfo));
-        System.out.println(goodsinfoService.delGoodsinfo(30003));
-        Map<String,Object> map = new HashMap<String, Object>();
-        map.put("goodstype_id",3);
-        map.put("warehouse_id",3);
-        map.put("name","'%华为%'");
-        System.out.println(goodsinfoService.findGoodsinfoByCondition(map,0,2));
     }
 }
