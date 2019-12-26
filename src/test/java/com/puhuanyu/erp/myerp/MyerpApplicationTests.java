@@ -1,13 +1,7 @@
 package com.puhuanyu.erp.myerp;
 
-import com.puhuanyu.erp.myerp.bean.Goodsinfo;
-import com.puhuanyu.erp.myerp.bean.Goodssize;
-import com.puhuanyu.erp.myerp.bean.Goodstype;
-import com.puhuanyu.erp.myerp.bean.Rank;
-import com.puhuanyu.erp.myerp.service.GoodsinfoService;
-import com.puhuanyu.erp.myerp.service.GoodssizeService;
-import com.puhuanyu.erp.myerp.service.GoodstypeService;
-import com.puhuanyu.erp.myerp.service.RankService;
+import com.puhuanyu.erp.myerp.bean.*;
+import com.puhuanyu.erp.myerp.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -84,5 +78,21 @@ class MyerpApplicationTests
         System.out.println(goodssizeService.updateGoodssize(goodssize1));
         System.out.println(goodssizeService.findAllGoodssizeByGoodsinfo_id(30002));
         System.out.println(goodssizeService.delGoodssizeById(3000203));
+    }
+
+    @Autowired
+    RanksService ranksService;
+    @Test
+    public void RanksServiceTest(){
+        Ranks ranks = ranksService.findRanksById(1);
+        System.out.println(ranks);
+        ranks.getRoot().setId(102);
+        System.out.println(ranksService.doRanks(ranks));
+        System.out.println(ranksService.findAllRanksByRank_id(1001));
+        Ranks ranks1 = ranksService.findRanksById(2);
+        int newRoot_id=103;
+        System.out.println(ranksService.updateRanks(ranks1.getId(),newRoot_id));
+        System.out.println(ranksService.findAllRanksByRank_id(1001));
+        System.out.println(ranksService.delRanks(2));
     }
 }
