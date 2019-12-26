@@ -12,6 +12,7 @@ public class Emp
     private String worktime;
     private String birthtime;
     private String leavetime;
+    private String img;
     private Dep dep;
     private Rank rank;
 
@@ -19,7 +20,7 @@ public class Emp
     {
     }
 
-    public Emp(int id, String name, String password, String sex, String phone, String address, String card, String worktime, String birthtime, String leavetime, Dep dep, Rank rank)
+    public Emp(int id, String name, String password, String sex, String phone, String address, String card, String worktime, String birthtime, String leavetime, String img, Dep dep, Rank rank)
     {
         this.id = id;
         this.name = name;
@@ -33,6 +34,7 @@ public class Emp
         this.leavetime = leavetime;
         this.dep = dep;
         this.rank = rank;
+        this.img = img;
     }
 
     public int getId()
@@ -155,8 +157,16 @@ public class Emp
         this.rank = rank;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public String toString(){
         return "Emp:[id="+id+",name="+name+",password="+password+",sex="+sex+",phone="+phone+",address="+address+",card="+card+
-                ",worktime="+worktime+",birthtime="+birthtime+",leavetime="+leavetime+","+dep+","+rank+"]";
+                ",worktime="+worktime+",birthtime="+birthtime+",leavetime="+leavetime+",img="+img+","+dep+","+rank+"]";
     }
 }
