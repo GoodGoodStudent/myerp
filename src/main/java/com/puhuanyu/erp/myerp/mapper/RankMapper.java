@@ -14,7 +14,7 @@ public interface RankMapper {//角色接口
     @Results(
             @Result(column = "dep_id",property = "dep",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.DepMapper.findById"))
     )
-    @Insert("insert into rank values(#{id},#{rank.id},#{root.id})")
+    @Insert("insert into rank values(#{id},#{name},#{dep_id})")
     public int doRank(Rank rank);
 
     //删除角色
