@@ -14,10 +14,10 @@ public interface RootTypeMapper
     public int doRootType(Roottype roottype);
 
     @Delete("delete from roottype where id=#{id}")
-    public void deleteRootType(int id);
+    public int deleteRootType(int id);
 
     @Update("update roottype set name=#{name} where id=#{id}")
-    public void updateRootType(Roottype roottype);
+    public int updateRootType(Roottype roottype);
 
     @Select("select * from roottype where id=#{id}")
     public Roottype findRootTypeById(int id);

@@ -16,18 +16,18 @@ public interface ShellMapper
     @Insert("insert into shell" +
             "(numberid,begaindate,overdate,clientinfo_id,emp_id,goodsinfo_id,number,state)" +
             " values(#{numberid},#{begaindate},#{overdate},#{clientinfo.id},#{emp.id},#{goodsinfo.id},#{number},#{state})")
-    public void doShell(Shell shell);
+    public int doShell(Shell shell);
 
     @Delete("delete from shell where id=#{id}")
-    public void deleteShellById(int id);
+    public int deleteShellById(int id);
 
     @Delete("delete from shell where numberid=#{nubid}")
-    public void deleteShellBynumberid(int nubid);
+    public int deleteShellBynumberid(int nubid);
 
     @Update("update shell set numberid=#{numberid},begaindate=#{begaindate},overdate=#{overdate}," +
             "clientinfo_id=#{clientinfo.id},emp_id=#{emp.id},goodsinfo_id=#{goodsinfo.id}," +
             "number=#{number},state=#{state} where id=#{id}")
-    public void updateShell(Shell shell);
+    public int updateShell(Shell shell);
 
     @Results({
             @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),

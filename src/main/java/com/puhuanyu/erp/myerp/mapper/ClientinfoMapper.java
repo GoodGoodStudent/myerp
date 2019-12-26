@@ -26,15 +26,15 @@ public interface ClientinfoMapper
 
     //修改客户或者供应商联系人
     @Update("update clientinfo set id=#{id},name=#{name},phone=#{phone},sex=#{sex},email=#{email},client_id=#{client.id}")
-    public void updateClientinfo(Clientinfo clientinfo);
+    public int updateClientinfo(Clientinfo clientinfo);
 
     //通过名字删出供应商或者客户的联系人
     @Delete("delete from clientinfo where name=#{name}")
-    public void delClientinfo(String name);
+    public int delClientinfo(String name);
 
     //添加一个客户或者供应商的联系人
     @Insert("insert into clientinfo(id,name,phone,sex,email client_id) value(#{id},#{name},#{phone},#{sex},#{email},#{client.id})")
-    public void doClientinfo(Clientinfo clientinfo);
+    public int doClientinfo(Clientinfo clientinfo);
 
     //通过id查询供应商或者客户联系人
     @Results(

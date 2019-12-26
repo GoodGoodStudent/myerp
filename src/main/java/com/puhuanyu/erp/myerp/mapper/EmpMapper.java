@@ -33,20 +33,20 @@ public interface EmpMapper
 
     //通过工号删除员工
     @Delete("delete from emp where id=#{id}")
-    public void deleteEmp(int id);
+    public int deleteEmp(int id);
 
     //修改员工信息
     @Update("update emp set id=#{id},name=#{name},password=#{password},sex=#{sex},phone=#{phone},address=#{address},card=#{card},worktime=#{worktime},birthtime=#{birthtime},lavetime=#{lavetime},dep_id=#{emp.dep_id},rank_id=#{emp.rank_id}")
-    public void updateEmp(Emp emp);
+    public int updateEmp(Emp emp);
 
     //添加员工信息
     @Insert("insert into emp(id,name,password,sex,phone,address,card,worktimme,birthtime,lavetime,dep_id,rank_id) value(#{id},#{name},#{password},#{sex},#{phone},#{address},#{card},#{worktime},#{birthtime},#{lavetime},#{emp.dep_id},#{emp.rank_id})")
-    public void doEmp(Emp emp);
+    public int doEmp(Emp emp);
 
     //通过员工工号修改角色权限
     @Results(
             @Result(property = "rank",column = "rank_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.RankMapper.findRankByid"))
     )
     @Update("update emp set rank_id=#{rankId} where id=#{id}")
-    public void updateRank(int id,int rankId);
+    public int updateRank(int id,int rankId);
 }

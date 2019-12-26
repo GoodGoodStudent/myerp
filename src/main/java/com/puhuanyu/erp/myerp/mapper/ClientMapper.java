@@ -20,15 +20,15 @@ public interface ClientMapper
 
     //添加一个客户或者供应商
     @Insert("insert into client(id,name,phone,address,state1,state2,email) value(#{id},#{name},#{phone},#{address},#{state1},#{state2},#{email})")
-    public void doClient(Client client);
+    public int doClient(Client client);
 
     //修改供应商或者客户的信息
     @Update("update client set id=#{id},name=#{name},phone=#{phone},address=#{address},state1=#{state1},state2=#{state2},email=#{email}")
-    public void updateClient(Client client);
+    public int updateClient(Client client);
 
     //删除一家供应商或者客户
     @Delete("delete from client where name=#{name}")
-    public void delClient(Client client);
+    public int delClient(Client client);
 
     //通过id查询一个客户或者供应商
     @Select("select * from client where id=#{id}")

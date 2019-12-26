@@ -16,5 +16,5 @@ public interface BuyerMapper
             @Result(property = "goodsinfo",column = "goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.Mapper.GoodsinfoMapper.findGoodsinfoByid"))
     })
     @Insert("insert into buyer(numberid,builddate,auditdate,begaindate,overdate,dep_id,emp_id1,emp_id2,goodsinfo_id,number,state) value(#{numberid},#{builddate},#{auditdate},#{begaindate},#{overdate},#{buyer.dep_id},#{buyer.emp_id1},#{buyer.emp_id2},#{buyer.goodsinfo_id},#{number},#{state})")
-    public void doBuyer(Buyer buyer);
+    public int doBuyer(Buyer buyer);
 }

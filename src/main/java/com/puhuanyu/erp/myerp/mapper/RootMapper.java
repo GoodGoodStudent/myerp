@@ -11,13 +11,13 @@ import java.util.List;
 public interface RootMapper
 {
     @Insert("insert into root(id,name,roottype_id) values(#{id},#{name},#{roottype.id})")
-    public void doRoot(Root root);
+    public int doRoot(Root root);
 
     @Delete("delete from root where id=#{id}")
-    public void deleteRoot(int id);
+    public int deleteRoot(int id);
 
     @Update("update root set name=#{name},roottype_id=#{roottype.id} where id=#{id}")
-    public void updateRoot(Root root);
+    public int updateRoot(Root root);
 
     @Results(
             @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.RootTypeMapper.findRootTypeById"))
