@@ -1,9 +1,11 @@
 package com.puhuanyu.erp.myerp;
 
 import com.puhuanyu.erp.myerp.bean.Goodsinfo;
+import com.puhuanyu.erp.myerp.bean.Goodssize;
 import com.puhuanyu.erp.myerp.bean.Goodstype;
 import com.puhuanyu.erp.myerp.bean.Rank;
 import com.puhuanyu.erp.myerp.service.GoodsinfoService;
+import com.puhuanyu.erp.myerp.service.GoodssizeService;
 import com.puhuanyu.erp.myerp.service.GoodstypeService;
 import com.puhuanyu.erp.myerp.service.RankService;
 import org.junit.jupiter.api.Test;
@@ -63,5 +65,23 @@ class MyerpApplicationTests
     public void goodsinfoService(){
         Map<String,Object> map = new HashMap<String, Object>();
         System.out.println(goodsinfoService.findGoodsinfoByCondition(map,0,2));
+    }
+
+    @Autowired
+    GoodssizeService goodssizeService;
+    @Test
+    public void goodssizeServiceTest(){
+        Goodssize goodssize = goodssizeService.findGoodssizeById(1000201);
+        System.out.println(goodssize);
+        goodssize.getGoodsinfo().setId(40002);
+        goodssize.setPrice(1000000);
+        System.out.println(goodssizeService.doGoodssize(goodssize));
+        System.out.println(goodssizeService.findAllGoodssizeByGoodsinfo_id(40002));
+        Goodssize goodssize1 = goodssizeService.findGoodssizeById(4000203);
+        goodssize1.getGoodsinfo().setId(30002);
+        goodssize1.setSize("33D");
+        System.out.println(goodssizeService.updateGoodssize(goodssize1));
+        System.out.println(goodssizeService.findAllGoodssizeByGoodsinfo_id(30002));
+        System.out.println(goodssizeService.delGoodssizeById(3000203));
     }
 }
