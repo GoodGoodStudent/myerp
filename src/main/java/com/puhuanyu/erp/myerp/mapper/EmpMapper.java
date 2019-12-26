@@ -36,12 +36,10 @@ public interface EmpMapper
     public void deleteEmp(int id);
 
     //修改员工信息
-
     @Update("update emp set id=#{id},name=#{name},password=#{password},sex=#{sex},phone=#{phone},address=#{address},card=#{card},worktime=#{worktime},birthtime=#{birthtime},lavetime=#{lavetime},dep_id=#{emp.dep_id},rank_id=#{emp.rank_id}")
     public void updateEmp(Emp emp);
 
     //添加员工信息
-
     @Insert("insert into emp(id,name,password,sex,phone,address,card,worktimme,birthtime,lavetime,dep_id,rank_id) value(#{id},#{name},#{password},#{sex},#{phone},#{address},#{card},#{worktime},#{birthtime},#{lavetime},#{emp.dep_id},#{emp.rank_id})")
     public void doEmp(Emp emp);
 
