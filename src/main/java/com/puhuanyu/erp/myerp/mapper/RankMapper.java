@@ -11,8 +11,10 @@ import java.util.List;
 public interface RankMapper {//角色接口
 
     //添加角色
-
-    @Insert("insert into ranks values(#{id},#{rank.id},#{root.id})")
+    @Results(
+            @Result(column = "dep_id",property = "dep",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.DepMapper.findById"))
+    )
+    @Insert("insert into rank values(#{id},#{name},#{dep.id})")
     public int doRank(Rank rank);
 
     //删除角色
@@ -45,9 +47,6 @@ public interface RankMapper {//角色接口
     public List<Rank> findAllRankByDep_id(int dep_id);
 
     //根据部门id查询出编号最大的id
-    @Results(
-            @Result(column = "dep_id",property = "dep",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.DepMapper.findById"))
-    )
     @Select("select Max(id) from rank where dep_id=#{dep_id}")
     public String findMaxRankIdByDep_id(int dep_id);
 
