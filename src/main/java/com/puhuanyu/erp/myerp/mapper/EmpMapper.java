@@ -49,4 +49,5 @@ public interface EmpMapper
     )
     @Update("update emp set rank_id=#{rankId} where id=#{id}")
     public int updateRank(int id,int rankId);
+
 }
