@@ -1,5 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Roottype
 {
     private int id;

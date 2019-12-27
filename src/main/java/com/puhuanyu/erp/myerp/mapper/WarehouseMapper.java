@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface WarehouseMapper
 {
-    @Insert("insert into warehouse(name,address,emp_id) values(#{name},#{address},#{emp.id})")
+    @Insert("insert into warehouse(id,name,address,emp_id) values(#{id},#{name},#{address},#{emp.id})")
     public int doWarehouse(Warehouse warehouse);
 
     @Delete("delete from warehouse where id=#{id}")
@@ -28,6 +28,24 @@ public interface WarehouseMapper
     @Results(
             @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.mapper.EmpMapper.findById"))
     )
+    @Select("select * from warehouse where emp_id=#{eid}")
+    public Warehouse findWarehouseByEmpId(int eid);
+
+    @Results(
+            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.mapper.EmpMapper.findById"))
+    )
     @Select("select * from warehouse")
     public List<Warehouse> findWarehouseByAll();
+
+    @Results(
+            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.mapper.EmpMapper.findById"))
+    )
+    @Select("select * from warehouse where address=#{address}")
+    public List<Warehouse> findWarehouseByAddress(String address);
+
+    @Results(
+            @Result(property="emp",column="emp_id",many=@Many(select="com.puhuanyu.erp.myerp.mapper.EmpMapper.findById"))
+    )
+    @Select("select max(id) from warehouse")
+    public String findWareByMaxId();
 }

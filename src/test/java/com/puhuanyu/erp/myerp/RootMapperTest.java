@@ -71,10 +71,10 @@ public class RootMapperTest
         //shellMapper.deleteShellById(3);
         System.out.println(shellMapper.findShellById(1).toString());
         System.out.println(shellMapper.findShellByNumberid("20192000002"));
-        System.out.println(shellMapper.findShellBybegaindate("2019-02-28").get(0).toString());
-        System.out.println(shellMapper.findShellByoverdate("2019-05-20").get(0).toString());
-        System.out.println(shellMapper.findShellByState(1).get(0).toString());
-        System.out.println(shellMapper.findShellAll().get(0).toString());
+        System.out.println(shellMapper.findShellBybegaindate("2019-02-28",0,1).get(0).toString());
+        System.out.println(shellMapper.findShellByoverdate("2019-05-20",0,1).get(0).toString());
+        System.out.println(shellMapper.findShellByState(1,0,1).get(0).toString());
+        System.out.println(shellMapper.findShellAll(0,1).get(0).toString());
     }
     @Test
     public void ShellBy()
@@ -117,6 +117,7 @@ public class RootMapperTest
                 text+=a[i][j];
             }
         }
+
         System.out.println(text);
     }
 }
