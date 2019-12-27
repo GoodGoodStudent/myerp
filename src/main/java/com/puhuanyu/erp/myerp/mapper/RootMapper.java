@@ -36,4 +36,10 @@ public interface RootMapper
     )
     @Select("select * from root")
     public List<Root> findRootByAll();
+
+    @Results(
+            @Result(property="roottype",column="roottype_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.RootTypeMapper.findRootTypeById"))
+    )
+    @Select("select max(id) from root where roottype_id=#{rid}")
+    public String findRootMaxById(int rid);
 }

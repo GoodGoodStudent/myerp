@@ -14,15 +14,15 @@ import java.util.Map;
 public interface ShellMapper
 {
     @Insert("insert into shell" +
-            "(numberid,begaindate,overdate,clientinfo_id,emp_id,goodsinfo_id,number,state)" +
-            " values(#{numberid},#{begaindate},#{overdate},#{clientinfo.id},#{emp.id},#{goodsinfo.id},#{number},#{state})")
+            "(id,numberid,begaindate,overdate,clientinfo_id,emp_id,goodsinfo_id,number,state)" +
+            " values(#{id},#{numberid},#{begaindate},#{overdate},#{clientinfo.id},#{emp.id},#{goodsinfo.id},#{number},#{state})")
     public int doShell(Shell shell);
 
     @Delete("delete from shell where id=#{id}")
     public int deleteShellById(int id);
 
     @Delete("delete from shell where numberid=#{nubid}")
-    public int deleteShellBynumberid(int nubid);
+    public int deleteShellBynumberid(String nubid);
 
     @Update("update shell set numberid=#{numberid},begaindate=#{begaindate},overdate=#{overdate}," +
             "clientinfo_id=#{clientinfo.id},emp_id=#{emp.id},goodsinfo_id=#{goodsinfo.id}," +
@@ -50,32 +50,32 @@ public interface ShellMapper
             @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
             @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
     })
-    @Select("select * from shell where state=#{state}")
-    public List<Shell> findShellByState(int state);//根据订单状态查找
+    @Select("select * from shell where state=#{state} limit #{firstScore},#{pageSize}")
+    public List<Shell> findShellByState(int state,int firstScore,int pageSize);//根据订单状态查找
 
     @Results({
             @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
             @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
             @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
     })
-    @Select("select * from shell where begaindate=#{begaindate}")
-    public List<Shell> findShellBybegaindate(String begaindate);//开始时间查找
+    @Select("select * from shell where begaindate=#{begaindate} limit #{firstScore},#{pageSize}")
+    public List<Shell> findShellBybegaindate(String begaindate,int firstScore,int pageSize);//开始时间查找
 
     @Results({
             @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
             @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
             @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
     })
-    @Select("select * from shell where overdate=#{overdate}")
-    public List<Shell> findShellByoverdate(String overdate);//结束时间查找
+    @Select("select * from shell where overdate=#{overdate} limit #{firstScore},#{pageSize}")
+    public List<Shell> findShellByoverdate(String overdate,int firstScore,int pageSize);//结束时间查找
 
     @Results({
             @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
             @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
             @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
     })
-    @Select("select * from shell")
-    public List<Shell> findShellAll();
+    @Select("select * from shell limit #{firstScore},#{pageSize}")
+    public List<Shell> findShellAll(int firstScore,int pageSize);
 
     @Results({
             @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
@@ -84,4 +84,20 @@ public interface ShellMapper
     })
     @SelectProvider(type = com.puhuanyu.erp.myerp.util.DynaSqlProvider.class,method = "selectWithParamSql")
     public List<Shell> findShellByCondition(String table, Map<String,Object> map,int firstScore,int pageSize);
+
+    @Results({
+            @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
+            @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
+            @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
+    })
+    @Select("select max(numberid) from shell")
+    public String findShellByMaxNumberId();
+
+    @Results({
+            @Result(property="clientinfo",column="clientinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.ClientinfoMapper.findById")),
+            @Result(property="emp",column="emp_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.EmpMapper.findById")),
+            @Result(property="goodsinfo",column="goodsinfo_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.GoodsinfoMapper.findGoodsinfoByid"))
+    })
+    @Select("select max(id) from shell")
+    public String findShellByMaxId();
 }
