@@ -2,6 +2,7 @@ package com.puhuanyu.erp.myerp;
 
 import com.puhuanyu.erp.myerp.bean.*;
 import com.puhuanyu.erp.myerp.mapper.*;
+import com.puhuanyu.erp.myerp.service.RootTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,15 +29,17 @@ public class RootMapperTest
     private ClientinfoMapper clientinfoMapper;
     @Autowired
     private GoodsinfoMapper goodsinfoMapper;
+    @Autowired
+    RootTypeService rootTypeService;
     @Test
     public void RootType()
     {
         //rootTypeMapper.doRootType(new Roottype("技术管理"));
         //rootTypeMapper.deleteRootType(7);
         //rootTypeMapper.updateRootType(new Roottype(1,"信息管理"));
-        Roottype roottype=rootTypeMapper.findRootTypeById(1);
-        System.out.println(roottype.toString());
-        List<Roottype> list=rootTypeMapper.findRootTypeByAll();
+        //Roottype roottype=rootTypeMapper.findRootTypeById(1);
+        //System.out.println(roottype.toString());
+        List<Roottype> list=rootTypeService.findRootTypeAll();
         for(Roottype t:list)
         {
             System.out.println(t.toString());

@@ -1,8 +1,10 @@
 package com.puhuanyu.erp.myerp.controller;
 
+import com.puhuanyu.erp.myerp.bean.Roottype;
 import com.puhuanyu.erp.myerp.mapper.RootMapper;
 import com.puhuanyu.erp.myerp.mapper.RootTypeMapper;
 import com.puhuanyu.erp.myerp.bean.Root;
+import com.puhuanyu.erp.myerp.service.RootTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -16,12 +18,10 @@ public class HelleoController
     @Autowired
     private RootMapper rootMapper;
     @Autowired
-    private RootTypeMapper rootTypeMapper;
+    private RootTypeService rootTypeService;
     @RequestMapping("/hello")
     public String hello()
     {
-        Root root=rootMapper.findRootById(101);
-        String str=root.toString()+" hello";
-        return str;
+        return rootTypeService.findRootTypeById(1).toString();
     }
 }

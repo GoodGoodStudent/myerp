@@ -3,9 +3,12 @@ package com.puhuanyu.erp.myerp.service;
 import com.puhuanyu.erp.myerp.bean.Roottype;
 import com.puhuanyu.erp.myerp.mapper.RootTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class RootTypeService
@@ -14,6 +17,11 @@ public class RootTypeService
     private RootTypeMapper rootTypeMapper;
     @Autowired
     private Roottype roottype;
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+
+
     //添加权限类型，找到最大的id再加1
     public String doRootType(String name)
     {
@@ -68,6 +76,19 @@ public class RootTypeService
     //根据id查找类型
     public Roottype findRootTypeById(int id)
     {
-        return rootTypeMapper.findRootTypeById(id);
+        String key="rootType_"+id;
+        ValueOperations<String, Roottype> operations=redisTemplate.opsForValue();
+        boolean hasKey = redisTemplate.hasKey(key);
+        Roottype r=null;
+        if(hasKey)
+        {
+            r=operations.get(key);
+        }
+        else
+        {
+            r=rootTypeMapper.findRootTypeById(id);
+            operations.set(key,r,5, TimeUnit.HOURS);
+        }
+        return r;
     }
 }

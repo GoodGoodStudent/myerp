@@ -2,8 +2,10 @@ package com.puhuanyu.erp.myerp.bean;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
-public class Roottype
+public class Roottype implements Serializable
 {
     private int id;
     private String name;
