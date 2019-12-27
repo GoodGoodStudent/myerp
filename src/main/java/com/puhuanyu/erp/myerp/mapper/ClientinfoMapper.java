@@ -25,12 +25,16 @@ public interface ClientinfoMapper
     public Clientinfo findByName(String name);
 
     //修改客户或者供应商联系人
-    @Update("update clientinfo set id=#{id},name=#{name},phone=#{phone},sex=#{sex},email=#{email},client_id=#{client.id}")
+    @Update("update clientinfo set name=#{name},phone=#{phone},sex=#{sex},email=#{email},client_id=#{client.id} where id=#{id}")
     public int updateClientinfo(Clientinfo clientinfo);
 
     //通过名字删出供应商或者客户的联系人
     @Delete("delete from clientinfo where name=#{name}")
-    public int delClientinfo(String name);
+    public int delClientinfoByName(String name);
+
+    //通过名字删出供应商或者客户的联系人
+    @Delete("delete from clientinfo where id=#{id}")
+    public int delClientinfoById(int id);
 
     //添加一个客户或者供应商的联系人
     @Insert("insert into clientinfo(id,name,phone,sex,email client_id) value(#{id},#{name},#{phone},#{sex},#{email},#{client.id})")
