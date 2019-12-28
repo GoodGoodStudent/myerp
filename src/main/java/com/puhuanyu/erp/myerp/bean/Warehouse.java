@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Warehouse
+import java.io.Serializable;
+
+public class Warehouse implements Serializable
 {
     private int id;
     private String name;

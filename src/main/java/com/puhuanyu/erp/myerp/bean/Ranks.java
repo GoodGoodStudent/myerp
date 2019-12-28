@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Ranks
+import java.io.Serializable;
+
+public class Ranks implements Serializable
 {
     private int id;
     private Rank rank;

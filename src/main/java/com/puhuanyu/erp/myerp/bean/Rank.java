@@ -2,8 +2,10 @@ package com.puhuanyu.erp.myerp.bean;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
-public class Rank
+public class Rank implements Serializable
 {
     private int id;
     private String name;

@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Goodssize//商品规格
+import java.io.Serializable;
+
+public class Goodssize implements Serializable//商品规格
 {
     private int id;
     private String size;

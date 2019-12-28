@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Emp
+import java.io.Serializable;
+
+public class Emp implements Serializable
 {
     private int id;
     private String name;

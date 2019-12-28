@@ -1,6 +1,9 @@
 package com.puhuanyu.erp.myerp.bean;
+
+import java.io.Serializable;
+
 //出售订单表
-public class Shell
+public class Shell implements Serializable
 {
     private int id;
     private String numberid;//订单编号

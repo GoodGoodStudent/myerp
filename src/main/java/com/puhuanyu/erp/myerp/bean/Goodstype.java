@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Goodstype//商品类型
+import java.io.Serializable;
+
+public class Goodstype implements Serializable//商品类型
 {
     private int id;
     private String name;

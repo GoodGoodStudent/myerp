@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Clientinfo
+import java.io.Serializable;
+
+public class Clientinfo implements Serializable
 {
     private int id;
     private String name;

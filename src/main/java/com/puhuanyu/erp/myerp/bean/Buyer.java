@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Buyer
+import java.io.Serializable;
+
+public class Buyer implements Serializable
 {
     private int id;
     private String numberid;

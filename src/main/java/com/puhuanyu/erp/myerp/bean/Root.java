@@ -1,6 +1,8 @@
 package com.puhuanyu.erp.myerp.bean;
 
-public class Root
+import java.io.Serializable;
+
+public class Root implements Serializable
 {
     private int id;
     private String name;

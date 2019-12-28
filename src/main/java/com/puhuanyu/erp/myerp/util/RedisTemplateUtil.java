@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 @Service
@@ -20,7 +21,7 @@ public class RedisTemplateUtil
     public Object findObjectByOne(Object object,int id)
     {
         String key=object+"_"+id;//生成key
-        ValueOperations<String,Object> operations=redisTemplate.opsForValue();
+        ValueOperations<Serializable,Object> operations=redisTemplate.opsForValue();
         boolean hasKey = redisTemplate.hasKey(key);//判断redis中有没有生成的key
         if(hasKey)
         {
@@ -36,14 +37,14 @@ public class RedisTemplateUtil
     public void setObjectByOne(Object object,int id)
     {
         String key=object+"_"+id;//生成key
-        ValueOperations<String,Object> operations=redisTemplate.opsForValue();
+        ValueOperations<Serializable,Object> operations=redisTemplate.opsForValue();
         operations.set(key,object,1, TimeUnit.HOURS);//存入缓存，TimeUnit.hours是代表缓存的生命周期，小时为单位
     }
     //添加list集合到redis缓存中
     public List<Object> findObjectList(List<Object> list,String where)
     {
         String key=list+"_"+where;//生成key
-        ListOperations<String, Object> operations=redisTemplate.opsForList();
+        ListOperations<Serializable, Object> operations=redisTemplate.opsForList();
         boolean hasKey = redisTemplate.hasKey(key);//判断redis中有没有生成的key
         if (hasKey)
         {
@@ -59,7 +60,7 @@ public class RedisTemplateUtil
     public void setObjectByList(List<Object> list,String where)
     {
         String key=list+"_"+where;//生成key
-        ListOperations<String, Object> operations=redisTemplate.opsForList();
+        ListOperations<Serializable, Object> operations=redisTemplate.opsForList();
         operations.leftPushAll(key,list);//将集合存入缓存
     }
 }
