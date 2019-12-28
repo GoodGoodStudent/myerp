@@ -22,6 +22,7 @@ public class HelleoController
     @RequestMapping("/hello")
     public String hello()
     {
-        return rootTypeService.findRootTypeById(1).toString();
+        //return rootTypeService.findRootTypeById(1).toString();
+        return rootTypeService.findRootTypeAll().toString();
     }
 }

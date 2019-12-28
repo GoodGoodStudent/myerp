@@ -2,13 +2,13 @@ package com.puhuanyu.erp.myerp.service;
 
 import com.puhuanyu.erp.myerp.bean.Roottype;
 import com.puhuanyu.erp.myerp.mapper.RootTypeMapper;
+import com.puhuanyu.erp.myerp.util.RedisTemplateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class RootTypeService
@@ -19,8 +19,10 @@ public class RootTypeService
     private Roottype roottype;
     @Autowired
     private RedisTemplate redisTemplate;
-
-
+    @Autowired
+    private List<Object> rootTypeList;
+    @Autowired
+    RedisTemplateUtil redisTemplateUtil;
 
     //添加权限类型，找到最大的id再加1
     public String doRootType(String name)
@@ -68,27 +70,61 @@ public class RootTypeService
         }
     }
     //查询所有的权限类型
-    public List<Roottype> findRootTypeAll()
+    public List<Object> findRootTypeAll()
     {
-        return rootTypeMapper.findRootTypeByAll();
+//        String key="rootTypeAll";
+//        ListOperations<String, Roottype> operations=redisTemplate.opsForList();
+//        boolean hasKey = redisTemplate.hasKey(key);
+//        List<Roottype> list=null;
+//        if(hasKey)
+//        {
+//            list=operations.range(key,0,-1);
+//        }
+//        else
+//        {
+//            list=rootTypeMapper.findRootTypeByAll();
+//            operations.leftPushAll(key,list);
+//        }
+        if (redisTemplateUtil.findObjectList(rootTypeList,"All")==null)
+        {
+            rootTypeList= Collections.singletonList(rootTypeMapper.findRootTypeByAll());
+            redisTemplateUtil.setObjectByList(rootTypeList,"All");
+        }
+        else
+        {
+            rootTypeList=redisTemplateUtil.findObjectList(rootTypeList,"All");
+        }
+        return rootTypeList;
     }
 
     //根据id查找类型
     public Roottype findRootTypeById(int id)
     {
-        String key="rootType_"+id;
-        ValueOperations<String, Roottype> operations=redisTemplate.opsForValue();
-        boolean hasKey = redisTemplate.hasKey(key);
-        Roottype r=null;
-        if(hasKey)
+//        String key="rootType_"+id;
+//        ValueOperations<String, Roottype> operations=redisTemplate.opsForValue();
+//        boolean hasKey = redisTemplate.hasKey(key);
+//        Roottype r=null;
+//        if(hasKey)
+//        {
+//            r=operations.get(key);
+//        }
+//        else
+//        {
+//            r=rootTypeMapper.findRootTypeById(id);
+//            operations.set(key,r,1, TimeUnit.HOURS);
+//        }
+//        return r;
+        //先到redis缓存中找id对应的对象，没有就从数据库查，再添加到缓存中
+        Roottype type= (Roottype)redisTemplateUtil.findObjectByOne(roottype,id);
+        if(type==null)
         {
-            r=operations.get(key);
+            roottype=rootTypeMapper.findRootTypeById(id);
+            redisTemplateUtil.setObjectByOne(roottype,id);//添加对象到缓存
         }
         else
         {
-            r=rootTypeMapper.findRootTypeById(id);
-            operations.set(key,r,5, TimeUnit.HOURS);
+            roottype=type;//缓存中存在的对象
         }
-        return r;
+        return roottype;
     }
 }

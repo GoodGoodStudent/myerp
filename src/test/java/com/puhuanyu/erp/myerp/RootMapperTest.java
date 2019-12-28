@@ -39,11 +39,11 @@ public class RootMapperTest
         //rootTypeMapper.updateRootType(new Roottype(1,"信息管理"));
         //Roottype roottype=rootTypeMapper.findRootTypeById(1);
         //System.out.println(roottype.toString());
-        List<Roottype> list=rootTypeService.findRootTypeAll();
-        for(Roottype t:list)
-        {
-            System.out.println(t.toString());
-        }
+        //List<Roottype> list=rootTypeService.findRootTypeAll();
+//        for(Roottype t:list)
+//        {
+//            System.out.println(t.toString());
+//        }
     }
     @Test
     public void Warehouse()
