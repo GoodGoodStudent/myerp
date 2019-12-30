@@ -32,7 +32,7 @@ public interface ClientinfoMapper
     @Delete("delete from clientinfo where name=#{name}")
     public int delClientinfoByName(String name);
 
-    //通过名字删出供应商或者客户的联系人
+    //通过编号删出供应商或者客户的联系人
     @Delete("delete from clientinfo where id=#{id}")
     public int delClientinfoById(int id);
 

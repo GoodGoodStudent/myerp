@@ -50,4 +50,7 @@ public interface EmpMapper
     @Update("update emp set rank_id=#{rankId} where id=#{id}")
     public int updateRank(int id,int rankId);
 
+    //员工通过工号修改自己的登录密码
+    @Update("update emp set password=#{password} where id=#{id}")
+    public int updatePassword(int id,String password);
 }
