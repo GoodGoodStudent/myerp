@@ -4,6 +4,8 @@ import com.puhuanyu.erp.myerp.bean.Emp;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Mapper
 public interface EmpMapper
@@ -53,4 +55,8 @@ public interface EmpMapper
     //员工通过工号修改自己的登录密码
     @Update("update emp set password=#{password} where id=#{id}")
     public int updatePassword(int id,String password);
+
+    //根据离职状态查询所有待离职员工
+    @Select("select * from emp where lavetime=#{lavetime}")
+    public List<Emp> findEmpByLavetime(String lavetime);
 }
