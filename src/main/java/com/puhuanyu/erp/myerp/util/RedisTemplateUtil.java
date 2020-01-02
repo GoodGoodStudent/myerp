@@ -1,5 +1,8 @@
 package com.puhuanyu.erp.myerp.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -7,6 +10,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,84 +19,74 @@ import java.util.concurrent.TimeUnit;
 public class RedisTemplateUtil
 {
     @Autowired
-    RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    //根据id和对象拼成一个key,然后去redis缓存中找，有则返回对象，无则返回null
-    public Object findObjectByOne(Map<String,Object> map, int id)
-    {
-        String entityName = "";
-        Set<String> set = map.keySet();
-        for(String s : set){
-            entityName = s;
-        }
-        Object object = map.get(entityName);
-        String key=entityName+"_"+id;//生成key
-        ValueOperations<Serializable,Object> operations=redisTemplate.opsForValue();
+    /**
+     * @Description 根据实体类名称和条件判断redis缓存中的key是否存在，
+     * @Param [entityName, where] entityName为实体类名，where为sql语句中where后面的条件
+     * @return java.lang.String  redis存在key返回json字符串，不存在返回null
+     * @Author 忠哥
+     * @Date 2019-12-31 15:44
+     */
+    public String findObject(String entityName, Object where) {
+        String key = getKey(entityName, where);//生成key
+        ValueOperations<String,Object> operations=redisTemplate.opsForValue();
         boolean hasKey = redisTemplate.hasKey(key);//判断redis中有没有生成的key
-        if(hasKey)
-        {
-            object=operations.get(key);//有就查出key值对应的value
+        if(hasKey) {
+            return (String) operations.get(key);
         }
-        else
-        {
-            object=null;//无则返回null
-        }
-        return object;
+        return null;
     }
-    //如果redis中没有key的缓存，就添加从数据库查出来的对象存入缓存
-    public void setObjectByOne(Map<String,Object> map,int id)
-    {
-        String entityName = "";
-        Set<String> set = map.keySet();
-        for(String s : set){
-            entityName = s;
-        }
-        Object object = map.get(entityName);
-        String key=entityName+"_"+id;//生成key
-        ValueOperations<Serializable,Object> operations=redisTemplate.opsForValue();
-        operations.set(key,object);//存入缓存，TimeUnit.hours是代表缓存的生命周期，小时为单位
 
-    }
-    //添加list集合到redis缓存中
-    public <T>List<T> findObjectList(Map<String, List<Object>> map, String where)
-    {
-        String entityName = "";
-        List<T> list = null;
-        Set<String> set = map.keySet();
-        for(String s : set){
-            entityName = s;
+    /**
+     * @Description 将object转换为Json字符串存进redis缓存中
+     * @Param [entityName, object, where] entutyName为实体类名，object为sql查询找到的对象或者集合，where为sql查询where后面的条件
+     * @return void
+     * @Author 忠哥
+     * @Date 2020-1-1 15:55
+     */
+    public void setObject(String entityName, Object object, Object where) {
+        String key = getKey(entityName, where);
+        ValueOperations<String,Object> operations=redisTemplate.opsForValue();
+        String objectString = "";
+        if(object instanceof List){
+            objectString = JSONArray.toJSONString(object);
+        }else {
+            objectString = JSON.toJSONString(object);//将对象转换成json字符串
         }
-        try {
-            String entityNames = entityName.substring(0,1).toUpperCase() + entityName.substring(1);
-            list = (List<T>) map.get(entityName);
+        operations.set(key,objectString);//存入缓存，TimeUnit.hours是代表缓存的生命周期，不写代表生命周期不存在
+    }
 
-            String key=entityName+"_"+where;//生成key
-            ListOperations<Serializable, Object> operations=redisTemplate.opsForList();
-            boolean hasKey = redisTemplate.hasKey(key);//判断redis中有没有生成的key
-            if (hasKey)
-            {
-                list= (List<T>) operations.range(key,0,-1);//获取缓存中的list集合
-            }
-            else
-            {
-                list=null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    /**
+     * @Description 根据表名和条件生成redis的key
+     * @Param [entityName, where] entityName为实体类名、where为sql查询where后面的条件
+     * @return java.lang.String 返回redis的key
+     * @Author 忠哥
+     * @Date 2019-12-31 15:35
+     */
+    public String getKey(String entityName, Object where){
+        entityName = entityName.substring(0,1).toUpperCase() + entityName.substring(1);
+        String key = "";
+        if(where != null){
+          key = entityName + "_" + where;
+        } else{
+           key = entityName;
         }
-        return list;
+        return key;
     }
-    //如果redis中没有key的缓存，就添加从数据库查出来的对象集合存入缓存
-    public void setObjectByList(Map<String,List<Object>> map,String where)
-    {
-        String entityName = "";
-        Set<String> set = map.keySet();
-        for(String s : set){
-            entityName = s;
+
+    /**
+     * @Description 删除该实体类名开头的所有缓存
+     * @Param [entityName] entityName为试题名
+     * @return void
+     * @Author 忠哥
+     * @Date 2020-1-1 16:55
+     */
+    public void delKey(String entityName){
+        String key = entityName + "*";
+        Set<String> keys = redisTemplate.keys(key);
+        if(!keys.isEmpty()){
+            redisTemplate.delete(keys);
         }
-        List<Object> list = map.get(entityName);
-        String key=entityName+"_"+where;//生成key
-        ListOperations<Serializable, Object> operations=redisTemplate.opsForList();
-        operations.leftPushAll(key,list);//将集合存入缓存
     }
 }

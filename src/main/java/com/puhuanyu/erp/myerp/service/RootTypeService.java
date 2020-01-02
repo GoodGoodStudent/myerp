@@ -26,8 +26,6 @@ public class RootTypeService
     private List<Roottype> rootTypeList;
     @Autowired
     RedisTemplateUtil redisTemplateUtil;
-    @Autowired
-    Map<String, Object> map;
 
     //添加权限类型，找到最大的id再加1
     public String doRootType(String name)
@@ -90,21 +88,9 @@ public class RootTypeService
             list=rootTypeMapper.findRootTypeByAll();
             operations.leftPushAll(key,list);
         }*/
-        Map<String,List<Object>> map = new HashMap<>();
-        map.put("Roottype", Collections.singletonList(rootTypeList));
-        if (redisTemplateUtil.findObjectList(map,"All")==null)
-        {
-            rootTypeList= rootTypeMapper.findRootTypeByAll();
-            map.put("Roottype", Collections.singletonList(rootTypeList));
-            redisTemplateUtil.setObjectByList(map,"All");
-            System.out.println("数据库拿");
-        }
-        else
-        {
-            rootTypeList=redisTemplateUtil.findObjectList(map,"All");
-            System.out.println("缓存中拿");
-        }
-        return rootTypeList;
+
+
+        return rootTypeMapper.findRootTypeByAll();
     }
 
     //根据id查找类型
@@ -125,7 +111,7 @@ public class RootTypeService
 //        }
 //        return r;
         //先到redis缓存中找id对应的对象，没有就从数据库查，再添加到缓存中
-        map.put("Roottype",roottype);
+        /*map.put("Roottype",roottype);
         Roottype type= (Roottype)redisTemplateUtil.findObjectByOne(map,id);
         if(type==null)
         {
@@ -138,7 +124,7 @@ public class RootTypeService
         {
             roottype=type;//缓存中存在的对象
             System.out.println("缓存中拿");
-        }
-        return roottype;
+        }*/
+        return rootTypeMapper.findRootTypeById(id);
     }
 }
