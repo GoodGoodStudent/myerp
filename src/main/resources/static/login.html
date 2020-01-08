@@ -1,10 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="favicon.ico" rel="shortcut icon">
     <meta charset="UTF-8">
     <title>登录</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function()
+        {
+            $("#but").click(function()
+            {
+                var id=$("#id").val();
+                var pwd=$("#pwd").val();
+                $.ajax({
+                    type:"get",
+                    url:"login",
+                    data:{"id":id,"pwd":pwd},
+                    dataType:"json",
+                    success:function (data)
+                    {
+                        if(data==null)
+                        {
+                            alert("用户名或密码输入错误！");
+                            $("#str").html("");
+                        }
+                        else
+                        {
+                            $("#str").html("欢迎"+data.name+"!");
+                        }
+
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
+    <div>
+        <input type="text" placeholder="请输入账号" id="id"><br>
+        <input type="password" placeholder="请输入密码" id="pwd"><br>
+        <input type="button" value="登录" id="but">
+    </div>
+    <div id="str"></div>
 
 </body>
 </html>

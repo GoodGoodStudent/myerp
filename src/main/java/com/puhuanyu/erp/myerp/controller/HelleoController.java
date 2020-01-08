@@ -3,10 +3,12 @@ package com.puhuanyu.erp.myerp.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.puhuanyu.erp.myerp.bean.Emp;
 import com.puhuanyu.erp.myerp.bean.Roottype;
 import com.puhuanyu.erp.myerp.mapper.RootMapper;
 import com.puhuanyu.erp.myerp.mapper.RootTypeMapper;
 import com.puhuanyu.erp.myerp.bean.Root;
+import com.puhuanyu.erp.myerp.service.EmpService;
 import com.puhuanyu.erp.myerp.service.RootTypeService;
 import com.puhuanyu.erp.myerp.util.RedisTemplateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,10 @@ import java.util.List;
 public class HelleoController
 {
     @Autowired
+    EmpService empService;
+    @Autowired
+    Emp emp;
+    @Autowired
     private RootMapper rootMapper;
     @Autowired
     private RootTypeService rootTypeService;
@@ -43,7 +49,7 @@ public class HelleoController
         PrintWriter out = null;
         try {
             out = response.getWriter();
-            key = redisTemplateUtil.findObject("Roottype", 1);
+            key = redisTemplateUtil.getKey("Roottype", 1);
             if(key == null){
                 roottype = rootTypeService.findRootTypeById(1);
                 redisTemplateUtil.setObject("Roottype", roottype, 1);
@@ -59,6 +65,20 @@ public class HelleoController
         }
     }
 
+    @RequestMapping("/hello1")
+    public String hello1() {
+        String key = "";
+        key = redisTemplateUtil.getKey("Roottype", 1);
+        if(key == null){
+            roottype = rootTypeService.findRootTypeById(1);
+            redisTemplateUtil.setObject("Roottype", roottype, 1);
+
+            return JSON.toJSONString(roottype);
+        }else {
+            return key;
+        }
+
+    }
     @RequestMapping("/world")
     public void world(HttpServletResponse response, HttpServletRequest request){
         response.setCharacterEncoding("utf-8");
@@ -66,7 +86,7 @@ public class HelleoController
         PrintWriter out = null;
         try {
             out = response.getWriter();
-            key = redisTemplateUtil.findObject("Roottype", null);
+            key = redisTemplateUtil.getKey("Roottype", null);
             if(key == null){
                 List<Roottype> list = rootTypeService.findRootTypeAll();
                 redisTemplateUtil.setObject("Roottype", list, null);
@@ -82,9 +102,23 @@ public class HelleoController
         }
     }
 
+    @RequestMapping("/world1")
+    public String world1(){
+        String key = "";
+        key = redisTemplateUtil.getKey("Roottype", null);
+        if(key == null){
+            List<Roottype> list = rootTypeService.findRootTypeAll();
+            redisTemplateUtil.setObject("Roottype", list, null);
+            return JSONArray.toJSONString(list);
+        }else {
+           return key;
+        }
+
+    }
     @RequestMapping("/wc")
     public void wc(HttpServletResponse response, HttpServletRequest request){
         rootTypeService.updateRootType(new Roottype(6, "仓库管理"));
         redisTemplateUtil.delKey("Roottype");
     }
+
 }
