@@ -1,19 +1,23 @@
 $(function () {
-
+    //点击验证码刷新验证码
     $("#codeImg").click(function () {
-        $("#codeImg").attr("src","/code.jpg"+ new Date() + Math.floor(Math.random()*24));
+        $("#codeImg").attr("src","/code.jpg?id="+ new Date() + Math.floor(Math.random()*24));
     });
 
+    //点击换一张刷新验证码
     $(".change").click(function () {
-        $("#codeImg").attr("src","/code.jpg"+ new Date() + Math.floor(Math.random()*24));
+        $("#codeImg").attr("src","/code.jpg?id="+ new Date() + Math.floor(Math.random()*24));
     });
 
-    //此方法防止空账号、空密码、空验证码提交
+    //form表单的相关判断
     $("#button").bind("click", function (event) {
+        //获取账号，密码，验证码和请记住我
         var id = $("#id").val().trim();
         var password = $("#password").val().trim();
         var code =$("#code").val().trim();
-        if(id==""){
+        var remeber = $("#remeber").is(':checked');
+
+        if(id==""){//防止空账号、空密码、空验证码提交
             $("#error_id").text("账号不能为空！");
             return false;
         }
@@ -25,15 +29,8 @@ $(function () {
             $("#error_code").text("验证码不能为空！");
             return false;
         }
-    })
 
-    $("#button").click(function () {
-        var id = $("#id").val().trim();
-        var password = $("#password").val().trim();
-        var code = $("#code").val().trim();
-        var remeber = $("#remeber").is(':checked');
-        alert(remeber);
-        $.ajax({
+        $.ajax({//登陆传值（账号，密码，验证码，请记住我）
             url: "/login?id="+id+"&password="+password+"&code="+code+"&remeber="+remeber,
             type: "post",
             dataType: "text",
@@ -46,16 +43,22 @@ $(function () {
                 }else if(data=="accountOrPasswordError"){
                     $("#error_password").text("账号密码输入有误！");
                 }else if(data=="powerError"){
-                    $("#error_code").text("验证码不能为空！");
+                    $("#error_password").text("权限不足！");
+                }else if(data=="codeError"){
+                    $("#error_code").text("验证码错误！");
+                    $("#codeImg").attr("src","/code.jpg?id="+ new Date() + Math.floor(Math.random()*24));
                 }else {
-                    window.location.href=data;
+                    alert("请求成功")
+                    location.href=data;
                 }
             },
             error: function (data) {
-                window.location.href="404.html";
+                alert("请求失败")
+                location.href="404.html";
             }
         })
     })
+
     //账号框失焦判断
     $("#id").blur(function () {
         var id = $("#id").val().trim();

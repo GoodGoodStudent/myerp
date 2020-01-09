@@ -43,6 +43,13 @@ public class DepController
         return "login.html";
     }
 
+    /**
+     * @Description 验证码生成器，将图片通过流的形式输出到客户端
+     * @Param [request, response]
+     * @return void
+     * @Author 忠哥
+     * @Date 2020-1-9 15:07
+     */
     @RequestMapping("/code.jpg")
     public void getCode(HttpServletRequest request, HttpServletResponse response){
         response.setContentType("image/jpeg");// 设置相应类型,告诉浏览器输出的内容为图片
@@ -53,9 +60,9 @@ public class DepController
         try {
             HttpSession session = request.getSession();
             StringBuffer code = new StringBuffer();
-            BufferedImage image = codeUtil.getRandomCodeImage(code);
+            BufferedImage image = codeUtil.getRandomCodeImage(code);//通过调用工具类来获取图片
             session.removeAttribute(CODE);
-            session.setAttribute(CODE, code.toString());
+            session.setAttribute(CODE, code.toString());//将验证码图片的内容保存在session
             // 将内存中的图片通过流动形式输出到客户端
             ImageIO.write(image, "JPEG", response.getOutputStream());
 
@@ -66,7 +73,7 @@ public class DepController
 
     /**
      * @Description 登陆请求
-     * @Param [emp]
+     * @Param [id,password,code,remeber,request] id、password、code、remeber分别为前端传来的账号，密码，验证码，请记住我
      * @return java.lang.String
      * @Author 忠哥
      * @Date 2020-1-6 11:00
@@ -74,13 +81,14 @@ public class DepController
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(String id, String password, String code, boolean remeber,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        System.out.println(id+":"+password+":"+code+":"+remeber);
-        if(code.equalsIgnoreCase(String.valueOf(session.getAttribute(CODE)))){
+        //验证码验证
+        HttpSession session = request.getSession();//获取session中的验证码
+        if(!code.equalsIgnoreCase(String.valueOf(session.getAttribute(CODE)))){
             return "codeError";
         }
+
         Subject subject = SecurityUtils.getSubject();//1.获取主体
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(id,password);//2.封装用户数据
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(id, password, remeber);//2.封装用户数据
         try {
             subject.login(usernamePasswordToken);//3.执行登陆方法------>4.认证身份（CustomRealm中的doGetAuthenticationInfo方法）
         }catch (UnknownAccountException e){//账号异常

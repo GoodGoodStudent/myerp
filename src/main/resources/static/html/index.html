@@ -5,23 +5,7 @@
     <title>主页</title>
     <script src="../jq/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
-        $(function(){
-            $.ajax({
-                type:"get",
-                url:"world/",
-                dataType:"json",
-                success:function (data) {
-                    alert(data);
-                    $.each(data,function (index,result) {
-                        $("#test").append("<p>" + result.id + ":" + result.name + "</p>")
-                    })
-                },
-                error:function (data) {
-                    alert("请求失败！")
-                }
-            })
-         }
-        )
+
     </script>
 </head>
 <body>
