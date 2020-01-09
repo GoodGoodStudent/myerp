@@ -1,23 +1,19 @@
 $(function () {
-    $.ajax({
-        url:"/code.jpg",
-        dataType: "text",
-        type: "get",
-        success: function (data) {
-            $("#imgpro").attr("src","data:image/JPEG;base64," + data);
-            console.info(data)
-        },
-        error: function (data) {
-            alert("请求失败")
-        }
-    })
+
+    $("#codeImg").click(function () {
+        $("#codeImg").attr("src","/code.jpg"+ new Date() + Math.floor(Math.random()*24));
+    });
+
+    $(".change").click(function () {
+        $("#codeImg").attr("src","/code.jpg"+ new Date() + Math.floor(Math.random()*24));
+    });
 
     //此方法防止空账号、空密码、空验证码提交
-    /*$("#button").bind("click", function (event) {
+    $("#button").bind("click", function (event) {
         var id = $("#id").val().trim();
         var password = $("#password").val().trim();
         var code =$("#code").val().trim();
-        /!*if(id==""){
+        if(id==""){
             $("#error_id").text("账号不能为空！");
             return false;
         }
@@ -28,8 +24,8 @@ $(function () {
         if(code==""){
             $("#error_code").text("验证码不能为空！");
             return false;
-        }*!/
-    })*/
+        }
+    })
 
     $("#button").click(function () {
         var id = $("#id").val().trim();
@@ -61,30 +57,30 @@ $(function () {
         })
     })
     //账号框失焦判断
-    /*$("#id").blur(function () {
+    $("#id").blur(function () {
         var id = $("#id").val().trim();
         if(id==""){
             $("#error_id").text("账号不能为空！");
         }else{
             $("#error_id").text("");
         }
-    })*/
+    })
     //密码框失焦判断
-    /*$("#password").blur(function () {
+    $("#password").blur(function () {
         var password = $("#password").val().trim();
         if(password==""){
             $("#error_password").text("密码不能为空！");
         }else{
             $("#error_password").text("");
         }
-    })*/
+    })
     //验证码框失焦判断
-    /*$("#code").blur(function () {
+    $("#code").blur(function () {
         var code = $("#code").val().trim();
         if(code==""){
             $("#error_code").text("验证码不能为空！");
         }else{
             $("#error_code").text("");
         }
-    })*/
+    })
 })

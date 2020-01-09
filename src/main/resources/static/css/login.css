@@ -24,7 +24,6 @@
     margin:120px auto;
     height: 350px;
 }
-
 .title{
     text-align: center;
 }
@@ -64,6 +63,7 @@ input{
     height: 40px;
     margin-top: -40px;
     margin-left: 160px;
+    cursor: pointer;
 }
 .change{
     font-size: 5px;
@@ -71,6 +71,14 @@ input{
     width: 50px;
     margin-top: -18px;
     margin-left: 260px;
+}
+.change>a{
+    color: #c9ccaf;
+}
+.change>a:hover{
+    text-decoration: none;
+    cursor: pointer;
+    color: #8786ff;
 }
 .checkbox{
     margin-top: 5px;

@@ -2,6 +2,13 @@ package com.puhuanyu.erp.myerp.util;
 
 public class PageBean
 {
+    /**
+     * @Description
+     * @Param
+     * @Author 小青
+     * @return
+     * @Date 21:06 2020/1/2
+     **/
     private int count;//总记录数
     private int pageSize;//每页记录条数
     private int pageIndex;//当前页

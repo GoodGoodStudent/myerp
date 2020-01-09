@@ -65,7 +65,7 @@ public class CustomRealm extends AuthorizingRealm {
         if(redisTemplateUtil.findObject("Ranks", "Rank_id") == null){//数据库找ranks权限和角色的关系表
             ranksList = ranksService.findAllRanksByRank_id(emp.getRank().getId());
         }else {//从缓存中找权限和角色关系表
-            ranksList = JSON.parseArray(redisTemplateUtil.findObject("Ranks", "Rank_id"),Ranks.class);
+            ranksList = JSON.parseArray(String.valueOf(redisTemplateUtil.findObject("Ranks", "Rank_id")),Ranks.class);
         }
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();//权限认证的信息
         simpleAuthorizationInfo.addRole(emp.getRank().getName());//添加角色到权限认证

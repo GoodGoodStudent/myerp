@@ -28,12 +28,12 @@ public class RedisTemplateUtil
      * @Author 忠哥
      * @Date 2019-12-31 15:44
      */
-    public String findObject(String entityName, Object where) {
+    public Object findObject(String entityName, Object where) {
         String key = getKey(entityName, where);//生成key
         ValueOperations<String,Object> operations=redisTemplate.opsForValue();
         boolean hasKey = redisTemplate.hasKey(key);//判断redis中有没有生成的key
         if(hasKey) {
-            return (String) operations.get(key);
+            return operations.get(key);
         }
         return null;
     }

@@ -72,8 +72,6 @@ public class ShiroConfig {
          *          role: 该资源必须得到角色资源才可以访问
          */
         Map<String,String> map = new LinkedHashMap<String,String>();
-        map.put("/hello", "anon");
-        map.put("/world", "anon");
         map.put("/code.jpg","anon");
         map.put("/logout","logout");
         map.put("/login","anon");
