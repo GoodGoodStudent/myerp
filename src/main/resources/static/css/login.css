@@ -1,0 +1,87 @@
+/*body{
+    background: url("../img/1.jpg");
+    animation-name:myfirst;
+    animation-duration:10s;
+    !*变换时间*!
+    animation-delay:2s;
+    !*动画开始时间*!
+    animation-iteration-count:infinite;
+    !*下一周期循环播放*!
+    animation-play-state:running;
+    !*动画开始运行*!
+}*/
+
+/*@keyframes myfirst
+{
+    0%   {background:url("../img/1.jpg");}
+    34%  {background:url("../img/2.jpg");}
+    67%  {background:url("../img/3.jpg");}
+    100% {background:url("../img/1.jpg");}
+}*/
+.form{
+    background: rgba(255,255,255,0.2);
+    width:400px;
+    margin:120px auto;
+    height: 350px;
+}
+
+.title{
+    text-align: center;
+}
+
+.fa{
+    display: inline-block;
+    left: 40px;
+    position: relative;
+    color: #ccc;
+}
+.error-info{
+    color: red;
+    margin-left: 30px;
+    margin-top: 2px;
+}
+.div_1{
+    height: 60px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+input{
+    height: 40px;
+    border-radius: 2px;
+}
+.user{
+    margin-left: 8px;
+    padding-left: 30px;
+}
+.sys{
+    margin-left: 22.5px;
+    padding-left: 25px;
+
+}
+.input_img{
+    width: 100px;
+    height: 40px;
+    margin-top: -40px;
+    margin-left: 160px;
+}
+.change{
+    font-size: 5px;
+    text-align: center;
+    width: 50px;
+    margin-top: -18px;
+    margin-left: 260px;
+}
+.checkbox{
+    margin-top: 5px;
+    margin-left: 80px;
+}
+.checkbox>input{
+    margin-top: -5px;
+}
+button{
+    margin-right: 25px;
+    margin-bottom: 5px;
+}
+
+

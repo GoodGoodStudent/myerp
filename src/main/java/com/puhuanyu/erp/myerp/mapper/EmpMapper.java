@@ -23,7 +23,7 @@ public interface EmpMapper
             @Result(property="dep",column = "dep_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.DepMapper.findById")),
             @Result(property="rank",column = "rank_id",many = @Many(select = "com.puhuanyu.erp.myerp.mapper.RankMapper.findRankByid"))
     })
-    @Select("select * from emp where id=#{id},password=#{password}")
+    @Select("select * from emp where id=#{id} and password=#{password}")
     public Emp findLogin(int id,String password);
     //通过姓名查询部门员工
     @Results({

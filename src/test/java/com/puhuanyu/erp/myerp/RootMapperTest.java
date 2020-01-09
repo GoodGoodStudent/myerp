@@ -60,9 +60,9 @@ public class RootMapperTest
     {
         //rootMapper.doRoot(new Root(701,"修改密码",rootTypeMapper.findRootTypeById(1)));
         //rootMapper.updateRoot(new Root(701,"添加员工",rootTypeMapper.findRootTypeById(2)));
-        rootMapper.deleteRoot(701);
+        //rootMapper.deleteRoot(701);
         //System.out.println(rootMapper.findRootById(101).toString());
-        //System.out.println(rootMapper.findRootByAll().get(0).toString());
+        System.out.println(rootMapper.findRootByAll().get(0).toString());
         //System.out.println(rootMapper.findRootByTypeId(1).get(1).toString());
     }
 

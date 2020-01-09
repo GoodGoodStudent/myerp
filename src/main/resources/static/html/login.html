@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎登陆</title>
+    <script src="../jq/jquery-3.4.1.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form row">
+            <div>
+                <h3 class="title">LOGIN</h3>
+                <!-- 我是form表单 -->
+                <div id="myForm">
+                    <div class="div_1">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input class="user" type="text" placeholder="账号" id="id" name="id" autofocus="id" size="30"/>
+                        <p class="error-info" id="error_id"></p>
+                    </div>
+                    <div class="div_1">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input class="user" type="password" placeholder="密码" id="password" name="password" size="30"/>
+                        <p class="error-info" id="error_password"></p>
+                    </div>
+                    <div class="div_1">
+                        <input id="code" class="sys" type="text" placeholder="验证码" size="5"/>
+                        <div class="input_img">
+                           <img id="imgpro" src="">
+                        </div>
+                        <div class="change">
+                            <span>换一张?</span>
+                        </div>
+                        <p class="error-info" id="error_code"></p>
+                    </div>
+                    <div class="remember">
+                        <label class="checkbox">
+                            <input type="checkbox" name="remember" value="1" id="remeber"/>记住我
+                        </label>
+                    </div>
+                    <div>
+                        <button id="button" class="btn btn-success pull-right">登录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/login.js"></script>
+</body>
+</html>

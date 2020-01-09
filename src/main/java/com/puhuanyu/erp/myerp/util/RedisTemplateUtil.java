@@ -64,7 +64,7 @@ public class RedisTemplateUtil
      * @Author 忠哥
      * @Date 2019-12-31 15:35
      */
-    public String getKey(String entityName, Object where){
+    private String getKey(String entityName, Object where){
         entityName = entityName.substring(0,1).toUpperCase() + entityName.substring(1);
         String key = "";
         if(where != null){

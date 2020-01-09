@@ -19,10 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-@RestController
+/**
+ *  注意：@RestController是@RequestBody和@Controller的合并，然而@RequestBody修饰的方法返回的是字符串
+ *       没有修饰的方法可以跳转到页面
+ * */
+@Controller
 public class HelleoController
 {
     @Autowired
@@ -37,8 +40,8 @@ public class HelleoController
     private RedisTemplate<String, Object> redisTemplate;
 
     @RequestMapping("/hello")
-    public void hello(HttpServletResponse response, HttpServletRequest request) {
-        response.setCharacterEncoding("utf-8");
+    public String hello(HttpServletResponse response, HttpServletRequest request) {
+        /*response.setCharacterEncoding("utf-8");
         String key = "";
         PrintWriter out = null;
         try {
@@ -56,11 +59,13 @@ public class HelleoController
         } finally {
             out.flush();
             out.close();
-        }
+        }*/
+        return "index.html";
     }
 
+    @ResponseBody
     @RequestMapping("/world")
-    public void world(HttpServletResponse response, HttpServletRequest request){
+    public void world(HttpServletResponse response, HttpServletRequest request) {
         response.setCharacterEncoding("utf-8");
         String key = "";
         PrintWriter out = null;
