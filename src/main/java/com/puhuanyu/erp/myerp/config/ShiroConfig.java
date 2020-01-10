@@ -3,10 +3,15 @@ package com.puhuanyu.erp.myerp.config;
 import com.puhuanyu.erp.myerp.shiro.CustomRealm;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,6 +51,7 @@ public class ShiroConfig {
     public DefaultSecurityManager defaultSecurityManager (@Qualifier("customRealm") CustomRealm customRealm){
         DefaultSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
         defaultSecurityManager.setRealm(customRealm);
+        defaultSecurityManager.setRememberMeManager(cookieRememberMeManager());
         return defaultSecurityManager;
     }
 
@@ -75,18 +81,72 @@ public class ShiroConfig {
         map.put("/code.jpg","anon");
         map.put("/logout","logout");
         map.put("/login","anon");
-        //map.put("/**","authc");
-        shiroFilterFactoryBean.setLoginUrl("/");//修改调整登陆的页面
-        shiroFilterFactoryBean.setSuccessUrl("/index");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
+        map.put("/css/**", "anon");
+        map.put("/js/**", "anon");
+        map.put("/jq/**", "anon");
+        map.put("/**","user");
+        shiroFilterFactoryBean.setLoginUrl("/");//设置未登陆跳转的页面
+        shiroFilterFactoryBean.setSuccessUrl("/index");//设置登陆成功跳转的页面
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");//设置未授权跳转的页面
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
 
+    /**
+     * @Description 开启shiro的aop注解，即在controller中使用 @RequiresPermissions("user/userList")等注解
+     * @Param [securityManager] 安全管理
+     * @return org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor
+     * @Author 忠哥
+     * @Date 2020-1-10 10:46
+     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
+    }
+
+    /**
+     * @Description 让shiro自己代理自己
+     * @Param
+     * @return org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator
+     * @Author 忠哥
+     * @Date 2020-1-10 11:05
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
+        defaultAAP.setProxyTargetClass(true);
+        return defaultAAP;
+    }
+
+    /**
+     * @Description cookie对象
+     * @Param []
+     * @return org.apache.shiro.web.servlet.SimpleCookie
+     * @Author 忠哥
+     * @Date 2020-1-10 13:11
+     */
+    @Bean
+    public SimpleCookie simpleCookie(){
+        SimpleCookie simpleCookie = new SimpleCookie("remeber");
+        simpleCookie.setMaxAge(259200);
+        return simpleCookie;
+    }
+
+    /**
+     * @Description cookie管理对象
+     * @Param []
+     * @return org.apache.shiro.web.mgt.CookieRememberMeManager
+     * @Author 忠哥
+     * @Date 2020-1-10 13:18
+     */
+    @Bean
+    public CookieRememberMeManager cookieRememberMeManager(){
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(simpleCookie());
+        cookieRememberMeManager.setCipherKey("MyselfCookie_key".getBytes());
+        return cookieRememberMeManager;
     }
 }

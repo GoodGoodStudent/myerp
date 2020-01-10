@@ -39,13 +39,14 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;//1.获取控制类传过来的主体
-        String id = usernamePasswordToken.getUsername();//2.获取主体的用户名和密码
-        String password = new String(usernamePasswordToken.getPassword());
+        String id = usernamePasswordToken.getUsername();//2.获取主体的用户名
         String reg = "[0-9]*";//3.正则表达式，判断账号是否为全数字
         if(id.matches(reg)){
-            Emp emp = empService.findEmpByIdAndPassword(Integer.parseInt(id), password);
+            Emp emp = empService.findEmpById(Integer.parseInt(id));
             if(emp != null){//4.验证用户名和密码是否正确，空则返回控制类的UnknownAccountException等异常
-                return new SimpleAuthenticationInfo(emp, password, getName());
+                return new SimpleAuthenticationInfo(emp, emp.getPassword(), getName());
+            }else{
+                return null;
             }
         }
         return null;

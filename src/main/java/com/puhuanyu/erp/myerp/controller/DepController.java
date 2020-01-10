@@ -29,7 +29,7 @@ public class DepController
     @Autowired
     private CodeUtil codeUtil;
 
-    public static final String CODE = "CODE";
+    public static final String CODE = "CODE";//session的验证码
 
     /**
      * @Description 默认初始请求跳转到登陆页面
@@ -41,6 +41,18 @@ public class DepController
     @RequestMapping(value = "/")
     public String index(){
         return "login.html";
+    }
+
+    /**
+     * @Description 跳转到未授权界面
+     * @Param []
+     * @return java.lang.String
+     * @Author 忠哥
+     * @Date 2020-1-9 16:19
+     */
+    @RequestMapping(value = "/noAuth")
+    public String noAuth(){
+        return "noAuth.html";
     }
 
     /**
@@ -86,7 +98,7 @@ public class DepController
         if(!code.equalsIgnoreCase(String.valueOf(session.getAttribute(CODE)))){
             return "codeError";
         }
-
+        System.out.println(remeber);
         Subject subject = SecurityUtils.getSubject();//1.获取主体
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(id, password, remeber);//2.封装用户数据
         try {
@@ -104,7 +116,12 @@ public class DepController
             e.printStackTrace();
             return "powerError";
         }
-        return "index.html";
+        //查看是否认证成功
+        if(subject.isAuthenticated()){
+            return "index.html";
+        }else{
+            return "login.html";
+        }
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
