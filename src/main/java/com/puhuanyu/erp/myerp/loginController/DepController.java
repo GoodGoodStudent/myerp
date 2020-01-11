@@ -1,4 +1,4 @@
-package com.puhuanyu.erp.myerp.controller;
+package com.puhuanyu.erp.myerp.loginController;
 
 import com.puhuanyu.erp.myerp.service.EmpService;
 import com.puhuanyu.erp.myerp.util.CodeUtil;
@@ -11,9 +11,7 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +36,7 @@ public class DepController
      * @Author 忠哥
      * @Date 2020-1-6 14:42
      */
-    @RequestMapping(value = "/")
+    @GetMapping(value = "/")
     public String index(){
         return "login.html";
     }
@@ -50,7 +48,7 @@ public class DepController
      * @Author 忠哥
      * @Date 2020-1-9 16:19
      */
-    @RequestMapping(value = "/noAuth")
+    @GetMapping(value = "/noAuth")
     public String noAuth(){
         return "noAuth.html";
     }
@@ -62,7 +60,7 @@ public class DepController
      * @Author 忠哥
      * @Date 2020-1-9 15:07
      */
-    @RequestMapping("/code.jpg")
+    @GetMapping("/code.jpg")
     public void getCode(HttpServletRequest request, HttpServletResponse response){
         response.setContentType("image/jpeg");// 设置相应类型,告诉浏览器输出的内容为图片
         // 不缓存此内容
@@ -91,7 +89,7 @@ public class DepController
      * @Date 2020-1-6 11:00
      */
     @ResponseBody
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public String login(String id, String password, String code, boolean remeber,HttpServletRequest request){
         //验证码验证
         HttpSession session = request.getSession();//获取session中的验证码
@@ -124,7 +122,9 @@ public class DepController
         }
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
     public String logout(){
         return "login";
-    }}
+    }
+
+}

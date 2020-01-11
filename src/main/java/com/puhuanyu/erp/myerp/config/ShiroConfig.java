@@ -24,7 +24,7 @@ import java.util.Map;
  *  @Author 忠哥
  *  @data 2020-01-03 10:50
  */
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
     /**
