@@ -24,7 +24,7 @@ import java.util.Map;
  *  @Author 忠哥
  *  @data 2020-01-03 10:50
  */
-//@Configuration
+@Configuration
 public class ShiroConfig {
 
     /**
@@ -78,6 +78,11 @@ public class ShiroConfig {
          *          role: 该资源必须得到角色资源才可以访问
          */
         Map<String,String> map = new LinkedHashMap<String,String>();
+
+        map.put("/swagger-ui.html", "anon");
+        map.put("/webjars/**", "anon");
+        map.put("/v2/**", "anon");
+        map.put("/swagger-resources/**","anon");
         map.put("/code.jpg","anon");
         map.put("/logout","logout");
         map.put("/login","anon");
@@ -87,7 +92,7 @@ public class ShiroConfig {
         map.put("/**","user");
         shiroFilterFactoryBean.setLoginUrl("/");//设置未登陆跳转的页面
         shiroFilterFactoryBean.setSuccessUrl("/index");//设置登陆成功跳转的页面
-        //shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");//设置未授权跳转的页面
+        shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");//设置未授权跳转的页面
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

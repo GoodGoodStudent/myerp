@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @Configuration
 @EnableSwagger2 //开启swagger2
-public class Swagger2
+public class SwaggerConfig
 {
     @Bean
     public Docket docket1()
