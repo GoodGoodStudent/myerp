@@ -111,6 +111,7 @@ public class ShiroConfig {
         map.put("/code.jpg","anon");
         map.put("/logout","logout");
         map.put("/login","anon");
+        map.put("/druid/**","anon");
         map.put("/css/**", "anon");
         map.put("/js/**", "anon");
         map.put("/jq/**", "anon");
