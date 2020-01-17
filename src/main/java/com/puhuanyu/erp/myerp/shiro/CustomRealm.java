@@ -9,8 +9,10 @@ import com.puhuanyu.erp.myerp.util.RedisTemplateUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -44,7 +46,9 @@ public class CustomRealm extends AuthorizingRealm {
         if(id.matches(reg)){
             Emp emp = empService.findEmpById(Integer.parseInt(id));
             if(emp != null){//4.验证用户名和密码是否正确，空则返回控制类的UnknownAccountException等异常
-                return new SimpleAuthenticationInfo(emp, emp.getPassword(), getName());
+                ByteSource salt = ByteSource.Util.bytes(emp.getName());
+                SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(emp, emp.getPassword(), salt, getName());
+                return simpleAuthenticationInfo;
             }else{
                 return null;
             }
@@ -61,6 +65,7 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println("授权方法执行");
         Emp emp = (Emp) principalCollection.getPrimaryPrincipal();//获取员工对象
         List<Ranks> ranksList = null;
         if(redisTemplateUtil.findObject("Ranks", "Rank_id") == null){//数据库找ranks权限和角色的关系表

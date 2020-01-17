@@ -1,14 +1,21 @@
 $(function () {
+
+    //点击换一张刷新验证码
+    $(".change").click(function () {
+        $("#codeImg").click();
+    });
+
     //点击验证码刷新验证码
     $("#codeImg").click(function () {
         $("#codeImg").attr("src","/code.jpg?id="+ new Date() + Math.floor(Math.random()*24));
     });
 
-    //点击换一张刷新验证码
-    $(".change").click(function () {
-        $("#codeImg").attr("src","/code.jpg?id="+ new Date() + Math.floor(Math.random()*24));
-    });
-
+    //回车事件
+    $("body").bind("keydown",function (event) {
+        if (event.keyCode == "13") {
+            $("#button").click();
+        }
+    })
     //form表单的相关判断
     $("#button").bind("click", function (event) {
         //获取账号，密码，验证码和请记住我

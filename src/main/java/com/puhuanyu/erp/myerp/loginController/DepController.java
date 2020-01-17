@@ -96,6 +96,8 @@ public class DepController
         if(!code.equalsIgnoreCase(String.valueOf(session.getAttribute(CODE)))){
             return "codeError";
         }
+        System.out.println(id);
+        System.out.println(password);
         System.out.println(remeber);
         Subject subject = SecurityUtils.getSubject();//1.获取主体
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(id, password, remeber);//2.封装用户数据
@@ -124,6 +126,10 @@ public class DepController
 
     @GetMapping(value = "/logout")
     public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        if (subject != null){
+            subject.logout();
+        }
         return "login";
     }
 

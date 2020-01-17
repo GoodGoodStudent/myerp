@@ -1,25 +1,32 @@
 package com.puhuanyu.erp.myerp.config;
 
 import com.puhuanyu.erp.myerp.shiro.CustomRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
- *  @Description
+ *  @Description shiro配置类，主要的要有f3：自定义的Realm,安全管理器,过滤器
  *  @ClassName ShiroConfig
  *  @Author 忠哥
  *  @data 2020-01-03 10:50
@@ -37,7 +44,24 @@ public class ShiroConfig {
     @Bean
     public CustomRealm customRealm(){
         CustomRealm customRealm = new CustomRealm();
+        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());//设置加密方式
         return customRealm;
+    }
+
+    /**
+     * @Description 加密方式
+     * @Param []
+     * @return org.apache.shiro.authc.credential.HashedCredentialsMatcher
+     * @Author 忠哥
+     * @Date 2020-1-16 15:33
+     */
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");//md5加密
+        hashedCredentialsMatcher.setHashIterations(1024);//加密次数
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);//默认是true,true表示密码加密使用Hex编码,false用Base64编码
+        return hashedCredentialsMatcher;
     }
 
     /**
@@ -52,9 +76,10 @@ public class ShiroConfig {
         DefaultSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
         defaultSecurityManager.setRealm(customRealm);
         defaultSecurityManager.setRememberMeManager(cookieRememberMeManager());
+        defaultSecurityManager.setCacheManager(redisCacheManager());
+        defaultSecurityManager.setSessionManager(defaultWebSessionManager());
         return defaultSecurityManager;
     }
-
 
     /**
      * @Description 过滤器
@@ -89,6 +114,7 @@ public class ShiroConfig {
         map.put("/css/**", "anon");
         map.put("/js/**", "anon");
         map.put("/jq/**", "anon");
+        map.put("/img/**", "anon");
         map.put("/**","user");
         shiroFilterFactoryBean.setLoginUrl("/");//设置未登陆跳转的页面
         shiroFilterFactoryBean.setSuccessUrl("/index");//设置登陆成功跳转的页面
@@ -127,6 +153,23 @@ public class ShiroConfig {
     }
 
     /**
+     * @Description 未授权时，指定跳转的页面
+     * @Param []
+     * @return org.springframework.web.servlet.handler.SimpleMappingExceptionResolver
+     * @Author 忠哥
+     * @Date 2020-1-16 15:46
+     */
+    @Bean
+    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
+        Properties properties = new Properties();
+        /*未授权处理页*/
+        properties.setProperty("UnauthorizedException", "noAuth.html");
+        resolver.setExceptionMappings(properties);
+        return resolver;
+    }
+
+    /**
      * @Description cookie对象
      * @Param []
      * @return org.apache.shiro.web.servlet.SimpleCookie
@@ -136,7 +179,7 @@ public class ShiroConfig {
     @Bean
     public SimpleCookie simpleCookie(){
         SimpleCookie simpleCookie = new SimpleCookie("remeber");
-        simpleCookie.setMaxAge(259200);
+        simpleCookie.setMaxAge(259200);//单位是秒，cookie生效时间30天
         return simpleCookie;
     }
 
@@ -151,7 +194,73 @@ public class ShiroConfig {
     public CookieRememberMeManager cookieRememberMeManager(){
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(simpleCookie());
-        cookieRememberMeManager.setCipherKey("MyselfCookie_key".getBytes());
+        cookieRememberMeManager.setCipherKey("MyselfCookie_key".getBytes());//设置cookie加密的密钥
         return cookieRememberMeManager;
+    }
+
+
+    @Value("${spring.redis.host}")
+    private String host;//redis主机
+    @Value("${spring.redis.port}")
+    private int port;//redis端口号
+    @Value("${spring.redis.password}")
+    private String password; //redis密码
+
+    /**
+     * @Description shiro里面的redis管理器
+     * @Param []
+     * @return org.crazycake.shiro.RedisManager
+     * @Author 忠哥
+     * @Date 2020-1-11 10:58
+     */
+    @Bean
+    public RedisManager redisManager(){
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(host);
+        redisManager.setPort(port);
+        redisManager.setPassword(password);
+        return redisManager;
+    }
+
+    /**
+     * @Description redis的缓存管理器
+     * @Param []
+     * @return org.crazycake.shiro.RedisCacheManager
+     * @Author 忠哥
+     * @Date 2020-1-16 15:47
+     */
+    @Bean
+    public RedisCacheManager redisCacheManager(){
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        return redisCacheManager;
+    }
+
+    /**
+     * @Description redis的会话dao
+     * @Param []
+     * @return org.crazycake.shiro.RedisSessionDAO
+     * @Author 忠哥
+     * @Date 2020-1-16 15:48
+     */
+    @Bean
+    public RedisSessionDAO redisSessionDAO(){
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager());
+        return redisSessionDAO;
+    }
+
+    /**
+     * @Description 默认网络会话管理
+     * @Param []
+     * @return org.apache.shiro.web.session.mgt.DefaultWebSessionManager
+     * @Author 忠哥
+     * @Date 2020-1-16 15:49
+     */
+    @Bean
+    public DefaultWebSessionManager defaultWebSessionManager(){
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setSessionDAO(redisSessionDAO());
+        return defaultWebSessionManager;
     }
 }

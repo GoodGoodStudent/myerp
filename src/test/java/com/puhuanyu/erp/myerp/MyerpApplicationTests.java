@@ -2,6 +2,8 @@ package com.puhuanyu.erp.myerp;
 
 import com.puhuanyu.erp.myerp.bean.*;
 import com.puhuanyu.erp.myerp.service.*;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -94,5 +96,40 @@ class MyerpApplicationTests
         System.out.println(ranksService.updateRanks(ranks1.getId(),newRoot_id));
         System.out.println(ranksService.findAllRanksByRank_id(1001));
         System.out.println(ranksService.delRanks(2));
+    }
+
+    @Autowired
+    private EmpService empService;
+    @Test
+    public void test01(){
+        //加密方式
+        String hashAlgorithmName = "MD5";
+        //加密次数
+        int hashInteractions = 1024;
+        //盐值
+        String salt = empService.findEmpById(5001001).getName();
+        String salt1 = empService.findEmpById(5002001).getName();
+        String salt2 = empService.findEmpById(6001001).getName();
+        String salt3 = empService.findEmpById(6001002).getName();
+        String salt4 = empService.findEmpById(6001003).getName();
+        String salt5 = empService.findEmpById(7001001).getName();
+        String salt6 = empService.findEmpById(7002001).getName();
+        //原密码
+        String pwd = "abc123";
+        //将得到的result放到数据库中就行了。
+        String result = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt), hashInteractions).toHex();
+        String result1 = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt1), hashInteractions).toHex();
+        String result2 = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt2), hashInteractions).toHex();
+        String result3 = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt3), hashInteractions).toHex();
+        String result4 = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt4), hashInteractions).toHex();
+        String result5 = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt5), hashInteractions).toHex();
+        String result6 = new SimpleHash(hashAlgorithmName, pwd, ByteSource.Util.bytes(salt6), hashInteractions).toHex();
+        System.out.println(result);
+        System.out.println(result1);
+        System.out.println(result2);
+        System.out.println(result3);
+        System.out.println(result4);
+        System.out.println(result5);
+        System.out.println(result6);
     }
 }
