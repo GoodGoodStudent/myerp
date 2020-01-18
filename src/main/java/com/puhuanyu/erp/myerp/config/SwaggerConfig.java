@@ -16,27 +16,15 @@ import java.util.ArrayList;
 @EnableSwagger2 //开启swagger2
 public class SwaggerConfig
 {
-    @Bean
-    public Docket docket1()
-    {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("A")
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.puhuanyu.erp.myerp.loginController"))
-                .build();
-    }
-    @Bean
-    public Docket docket2()
-    {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("B");
-    }
-    @Bean
-    public Docket docket3()
-    {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("C");
-    }
+    /**
+     * @Description 配置自定义的swagger2的试图页面
+     * @Param []
+     * @Author 青哥
+     * @return springfox.documentation.spring.web.plugins.Docket
+     * @Date  2020/1/18  19:26
+     **/
+    //通过http://localhost:8080/swagger-ui.html访问API
+
     //配置bean实例
     /**
      * @Description 修改swagger页面的默认信息
@@ -85,5 +73,32 @@ public class SwaggerConfig
                 "http://www.baidu.com",
                 new ArrayList<>()
         );
+    }
+    @Bean
+    public Docket docket1()
+    {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("A")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.puhuanyu.erp.myerp.loginController"))
+                .build();
+    }
+    @Bean
+    public Docket docket2()
+    {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("B")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.puhuanyu.erp.myerp.loginController"))
+                .build();
+    }
+    @Bean
+    public Docket docket3()
+    {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("C")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.puhuanyu.erp.myerp.loginController"))
+                .build();
     }
 }
